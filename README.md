@@ -38,6 +38,45 @@ All icons use the locally bundled `bootstrap-icons` package. See the [icon setup
 - Shared CSS design tokens, with dark and light themes
 - Small dependency footprint; CodeMirror remains optional
 
+## Install in another project
+
+### Install from GitHub
+
+1. Commit and push the package source, build configuration, and `prepare` script to the branch you want to install. Do not commit `dist/`; the `prepare` script builds it during installation.
+2. In the consuming Vue 3 project, install the package from GitHub:
+
+   ```bash
+   npm install github:larsliin/ChromeExtensionsComponentLibrary#main vue
+   ```
+
+   The repository must be public or the installing user must have GitHub access.
+3. Import the library stylesheet once in the app entry point, then import components where needed:
+
+   ```ts
+   // src/main.ts
+   import 'chrome-extension-component-library/style.css'
+   ```
+
+   ```vue
+   <script setup lang="ts">
+   import { BaseButton } from 'chrome-extension-component-library'
+   </script>
+
+   <template>
+     <BaseButton variant="primary">Continue</BaseButton>
+   </template>
+   ```
+
+### Install from npm
+
+After publishing the package, install it with:
+
+```bash
+npm install chrome-extension-component-library vue
+```
+
+The CodeMirror editor is available separately from `chrome-extension-component-library/code-editor`. Install its peer dependencies only if you use it.
+
 ## Development
 
 Install the development dependencies:
@@ -60,10 +99,33 @@ npm run docs:dev
 
 ## Build
 
-Build and type-check the demo app:
+From the library repository root:
+
+1. Install the development dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Build and type-check the installable package (ES modules, CSS, and TypeScript declarations):
+
+   ```bash
+   npm run build
+   ```
+
+   GitHub installs run this build automatically through `prepare`.
+3. Optionally create a local tarball:
+
+   ```bash
+   npm pack
+   ```
+
+   npm writes a `.tgz` file to the current directory. Install it in another project with `npm install <path-to-tarball>`. You can publish it with `npm publish` when ready to release.
+
+Build the demo app instead:
 
 ```bash
-npm run build
+npm run build:demo
 ```
 
 Build the documentation site:
@@ -71,5 +133,3 @@ Build the documentation site:
 ```bash
 npm run docs:build
 ```
-
-The current package is private. These scripts build the demo app and documentation; they do not publish an installable npm package.

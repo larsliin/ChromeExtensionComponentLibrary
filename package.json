@@ -1,18 +1,36 @@
 {
   "name": "chrome-extension-component-library",
-  "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./code-editor": {
+      "types": "./dist/types/code-editor.d.ts",
+      "import": "./dist/code-editor.js"
+    },
+    "./style.css": "./dist/chrome-extension-component-library.css"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "build": "vue-tsc -b && vite build --mode package && vue-tsc -p tsconfig.lib.json",
+    "build:demo": "vue-tsc -b && vite build",
     "preview": "vite preview",
     "docs:dev": "vitepress dev docs --port 9001",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
-  },
-  "dependencies": {
-    "bootstrap-icons": "^1.13.2"
+    "docs:preview": "vitepress preview docs",
+    "prepare": "npm run build"
   },
   "peerDependencies": {
     "@codemirror/language": "^6.0.0",
@@ -28,6 +46,7 @@
     "@codemirror/view": { "optional": true }
   },
   "devDependencies": {
+    "bootstrap-icons": "^1.13.2",
     "@codemirror/lang-json": "^6.0.2",
     "@codemirror/language": "^6.13.1",
     "@codemirror/state": "^6.7.6",

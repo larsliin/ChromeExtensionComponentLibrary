@@ -24,7 +24,7 @@ npm install @codemirror/lang-json   # or any other language package
 ```
 
 ```ts
-import { BaseCodeEditor } from 'chrome-extension-component-library/src/code-editor'
+import { BaseCodeEditor } from 'chrome-extension-component-library/code-editor'
 ```
 
 ## Example

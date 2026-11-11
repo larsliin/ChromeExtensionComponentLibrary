@@ -48,3 +48,9 @@ import { BaseButton } from 'chrome-extension-component-library'
   </BaseButton>
 </template>
 ```
+
+Import the library stylesheet once in your app entry point to load the design tokens, base styles, and Bootstrap Icons:
+
+```ts
+import 'chrome-extension-component-library/style.css'
+```

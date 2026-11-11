@@ -1,5 +1,3 @@
-import 'bootstrap-icons/font/bootstrap-icons.css';
-
 export { default as BaseAlert } from './components/BaseAlert.vue';
 export { default as BaseButton } from './components/BaseButton.vue';
 export { default as BaseCheckbox } from './components/BaseCheckbox.vue';

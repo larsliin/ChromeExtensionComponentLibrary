@@ -12,12 +12,12 @@ All component styling comes from CSS custom properties in [`src/styles/tokens.cs
 
 ```ts
 // main.ts of a consuming extension
-import 'chrome-extension-component-library/src/styles/index.css'
+import 'chrome-extension-component-library/style.css'
 ```
 
 ## Icons
 
-All component icons use the bundled `bootstrap-icons` package, not a CDN. Importing the library entry point or `src/styles/index.css` loads its icon stylesheet and local font assets. When importing individual component files with only the token stylesheet, also import `bootstrap-icons/font/bootstrap-icons.css`.
+All component icons use Bootstrap Icons from the library stylesheet, not a CDN. Import `chrome-extension-component-library/style.css` to load its icon styles and local font assets.
 
 Use Bootstrap Icon classes in icon slots, with the accessible name on the control:
 
