@@ -1,0 +1,4 @@
+/* tokens.css defaults :root to the dark scheme; keep the docs shell in sync with VitePress' toggle. */
+html:not(.dark) {
+    color-scheme: light;
+}

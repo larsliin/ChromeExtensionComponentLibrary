@@ -1,0 +1,36 @@
+/*
+ * Optional global reset for apps consuming the library (e.g. extension popups).
+ * Not loaded by the docs site.
+ */
+
+:root {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+html,
+body,
+#app {
+    height: 100%;
+}
+
+body {
+    /* Override the browser's injected extension-page typography. */
+    font: inherit;
+    -webkit-font-smoothing: antialiased;
+}
+
+button {
+    font: inherit;
+    color: inherit;
+}
