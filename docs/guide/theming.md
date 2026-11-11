@@ -1,6 +1,6 @@
 # Theming
 
-All component styling comes from CSS custom properties in [`src/styles/tokens.css`](https://github.com/larsliin/ChromeExtensionsComponentLibrary/blob/main/chrome-extension-component-library/src/styles/tokens.css). Components never contain raw color values.
+All component styling comes from CSS custom properties in [`src/styles/tokens.css`](https://github.com/larsliin/ChromeExtensionsComponentLibrary/blob/main/src/styles/tokens.css). Components never contain raw color values.
 
 ## Stylesheets
 
