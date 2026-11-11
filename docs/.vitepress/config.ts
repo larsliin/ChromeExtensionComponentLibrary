@@ -19,7 +19,18 @@ export default defineConfig({
       {
         text: 'Components',
         items: [
+          { text: 'BaseAlert', link: '/components/base-alert' },
           { text: 'BaseButton', link: '/components/base-button' },
+          { text: 'BaseCheckbox', link: '/components/base-checkbox' },
+          { text: 'BaseCodeEditor', link: '/components/base-code-editor' },
+          { text: 'BaseCopyButton', link: '/components/base-copy-button' },
+          { text: 'BaseHeroButton', link: '/components/base-hero-button' },
+          { text: 'BaseIconButton', link: '/components/base-icon-button' },
+          { text: 'BaseLoadingBar', link: '/components/base-loading-bar' },
+          { text: 'BaseMenuSelect', link: '/components/base-menu-select' },
+          { text: 'BaseNumberInput', link: '/components/base-number-input' },
+          { text: 'BaseRangeInput', link: '/components/base-range-input' },
+          { text: 'BaseSelect', link: '/components/base-select' },
         ],
       },
     ],

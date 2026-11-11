@@ -48,9 +48,27 @@ Square icon button for toolbars. Always provide an `aria-label`.
 <BaseButton variant="tool" aria-label="Refresh" title="Refresh">⟳</BaseButton>
 ```
 
+For icon-only buttons prefer [BaseIconButton](/components/base-icon-button), which enforces an accessible label.
+
+### Bare
+
+No padding, background or border — a clickable shell for custom content such as list rows, swatches and cards. Keeps the focus ring and disabled state. Its reset styles have zero specificity, so your own classes always win.
+
+<ComponentPreview>
+  <BaseButton variant="bare" style="display: flex; gap: 12px; padding: 6px 8px; width: 240px">
+    <strong>RGB</strong><code>rgb(29 158 117)</code>
+  </BaseButton>
+</ComponentPreview>
+
+```vue
+<BaseButton variant="bare" class="format-row" @click="copy(format)">
+  <span>{{ format.name }}</span><span>{{ format.value }}</span>
+</BaseButton>
+```
+
 ## Sizes
 
-`primary` and `secondary` come in `medium` (default) and `small`. `tool` has a fixed 36×36 size.
+`primary` and `secondary` come in `medium` (default) and `small`. `tool` has a fixed 36×36 size; `bare` has no size.
 
 | Size | Font size | Padding | Min height |
 |------|-----------|---------|------------|
@@ -73,8 +91,8 @@ Square icon button for toolbars. Always provide an `aria-label`.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | Native button type |
-| `variant` | `'primary' \| 'secondary' \| 'tool'` | — | Visual style |
-| `size` | `'small' \| 'medium'` | `'medium'` | Size (ignored by `tool`) |
+| `variant` | `'primary' \| 'secondary' \| 'tool' \| 'bare'` | — | Visual style |
+| `size` | `'small' \| 'medium'` | `'medium'` | Size (ignored by `tool` and `bare`) |
 
 Native attributes (`disabled`, `title`, `aria-*`) and listeners (`@click`, ...) fall through to the `<button>`.
 

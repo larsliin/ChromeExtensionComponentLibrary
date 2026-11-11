@@ -3,8 +3,8 @@
 
     withDefaults(defineProps<{
         type?: 'button' | 'submit' | 'reset';
-        variant?: 'primary' | 'secondary' | 'tool';
-        /** Ignored by the `tool` variant, which has a fixed square size. */
+        variant?: 'primary' | 'secondary' | 'tool' | 'bare';
+        /** Ignored by the `tool` and `bare` variants. */
         size?: 'small' | 'medium';
     }>(), {
         type: 'button',
@@ -26,7 +26,7 @@
         :class="[
             'base-button',
             variant && `${variant}-button`,
-            variant !== 'tool' && `size-${size}`,
+            variant !== 'tool' && variant !== 'bare' && `size-${size}`,
         ]"
     >
         <slot />
@@ -132,5 +132,14 @@
 
 .tool-button:disabled {
     opacity: 0.4;
+}
+
+/* Bare — unstyled shell for custom clickable content (rows, swatches, cards). */
+
+:where(.bare-button) {
+    padding: 0;
+    text-align: inherit;
+    background: transparent;
+    border: 0;
 }
 </style>

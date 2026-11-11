@@ -19,11 +19,31 @@
     --palette-white: #ffffff;
 
     --font-family-base: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     --font-size-base: 14px;
     --line-height-base: 1.4;
 
     --radius-button: 4px;
     --shadow-floating-panel: 0 4px 16px rgb(0 0 0 / 40%);
+
+    /* Hero button (BaseHeroButton) — glossy accent surface, identical in both themes. */
+    --color-hero-text: var(--palette-white);
+    --color-hero-caption: rgb(255 255 255 / 88%);
+    --color-hero-gradient-start: #218766;
+    --color-hero-gradient-middle: #0c7252;
+    --color-hero-gradient-end: #086148;
+    --color-hero-bounce: rgb(70 230 160 / 38%);
+    --color-hero-border: #08664b;
+    --color-hero-highlight: rgb(255 255 255 / 35%);
+    --color-hero-highlight-active: rgb(255 255 255 / 20%);
+    --color-hero-gloss-start: rgb(255 255 255 / 38%);
+    --color-hero-gloss-end: rgb(255 255 255 / 7%);
+    --color-hero-shadow-inset: rgb(0 40 28 / 18%);
+    --color-hero-shadow-active: rgb(0 40 28 / 30%);
+    --color-hero-text-shadow: rgb(0 42 27 / 35%);
+    --color-hero-icon-bg: rgb(255 255 255 / 12%);
+    --color-hero-icon-sheen: rgb(255 255 255 / 20%);
+    --color-hero-icon-border: rgb(255 255 255 / 25%);
 }
 
 :root,
@@ -47,6 +67,25 @@
     --color-accent-hover: var(--palette-green-600);
     --color-accent-active: var(--palette-green-700);
     --color-on-accent: var(--palette-white);
+
+    --color-error: #ef4444;
+    --color-error-bg: rgb(220 38 38 / 15%);
+    --color-error-border: rgb(220 38 38 / 30%);
+    --color-warning: #f59e0b;
+    --color-warning-bg: rgb(217 119 6 / 15%);
+    --color-warning-border: rgb(217 119 6 / 30%);
+    --color-info: #60a5fa;
+    --color-info-bg: rgb(37 99 235 / 15%);
+    --color-info-border: rgb(37 99 235 / 30%);
+
+    --color-hero-disabled-bg: #363636;
+    --color-hero-disabled-border: #626262;
+    --color-hero-disabled-text: #a6a6a6;
+    --color-hero-disabled-icon-bg: var(--color-hover);
+    --color-hero-disabled-icon-border: var(--color-border);
+    --color-hero-disabled-gloss-start: rgb(255 255 255 / 36%);
+    --color-hero-disabled-gloss-end: rgb(255 255 255 / 8%);
+    --color-hero-disabled-bounce: rgb(255 255 255 / 22%);
 }
 
 [data-theme='light'] {
@@ -69,4 +108,23 @@
     --color-accent-hover: var(--palette-green-600);
     --color-accent-active: var(--palette-green-700);
     --color-on-accent: var(--palette-white);
+
+    --color-error: #b91c1c;
+    --color-error-bg: rgb(220 38 38 / 10%);
+    --color-error-border: rgb(220 38 38 / 35%);
+    --color-warning: #b45309;
+    --color-warning-bg: rgb(217 119 6 / 10%);
+    --color-warning-border: rgb(217 119 6 / 35%);
+    --color-info: #1d4ed8;
+    --color-info-bg: rgb(37 99 235 / 10%);
+    --color-info-border: rgb(37 99 235 / 35%);
+
+    --color-hero-disabled-bg: #bdc7be;
+    --color-hero-disabled-border: #87958a;
+    --color-hero-disabled-text: #3f4e43;
+    --color-hero-disabled-icon-bg: #aab8ad;
+    --color-hero-disabled-icon-border: #87958a;
+    --color-hero-disabled-gloss-start: rgb(255 255 255 / 44%);
+    --color-hero-disabled-gloss-end: rgb(255 255 255 / 10%);
+    --color-hero-disabled-bounce: rgb(255 255 255 / 30%);
 }
