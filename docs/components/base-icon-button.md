@@ -11,23 +11,24 @@ Square icon-only button for toolbars and headers. A wrapper around `BaseButton v
 
 <ComponentPreview>
   <BaseIconButton label="Refresh config">
-    <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-      <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-      <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-    </svg>
+    <i class="bi bi-arrow-clockwise" aria-hidden="true" />
   </BaseIconButton>
-  <BaseIconButton label="Pan" :active="panActive" @click="panActive = !panActive">✋</BaseIconButton>
-  <BaseIconButton label="Refresh config" disabled>⟳</BaseIconButton>
+  <BaseIconButton label="Pan" :active="panActive" @click="panActive = !panActive">
+    <i class="bi bi-hand-index" aria-hidden="true" />
+  </BaseIconButton>
+  <BaseIconButton label="Refresh config" disabled>
+    <i class="bi bi-arrow-clockwise" aria-hidden="true" />
+  </BaseIconButton>
 </ComponentPreview>
 
 ```vue
 <BaseIconButton label="Refresh config" @click="refresh">
-  <RefreshIcon />
+  <i class="bi bi-arrow-clockwise" aria-hidden="true" />
 </BaseIconButton>
 
 <!-- Toggle -->
 <BaseIconButton label="Pan" :active="tool === 'pan'" @click="tool = 'pan'">
-  <PanIcon />
+  <i class="bi bi-hand-index" aria-hidden="true" />
 </BaseIconButton>
 ```
 

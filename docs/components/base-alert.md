@@ -9,6 +9,8 @@ const message = ref('Could not load the config file.')
 
 Inline status message for errors, warnings and information. Renders nothing when `message` is empty, so it can be bound directly to an error ref.
 
+The 18px icon, 14px message and optional dismiss button are vertically centered, including when the message wraps onto multiple lines. The message uses a 1.4 line height.
+
 ## Variants
 
 <ComponentPreview>

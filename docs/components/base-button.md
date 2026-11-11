@@ -18,7 +18,7 @@ Main call-to-action, e.g. "Copy to Clipboard".
 </ComponentPreview>
 
 ```vue
-<BaseButton variant="primary" @click="copy">Copy to Clipboard</BaseButton>
+<BaseButton variant="primary" @click="handleClick">Copy to Clipboard</BaseButton>
 ```
 
 ### Secondary
@@ -40,12 +40,14 @@ Outlined, accent-colored text, e.g. "Copy HEX" / "Copy all colors".
 Square icon button for toolbars. Always provide an `aria-label`.
 
 <ComponentPreview>
-  <BaseButton variant="tool" aria-label="Refresh">⟳</BaseButton>
-  <BaseButton variant="tool" aria-label="Refresh" disabled>⟳</BaseButton>
+  <BaseButton variant="tool" aria-label="Refresh"><i class="bi bi-arrow-clockwise" aria-hidden="true" /></BaseButton>
+  <BaseButton variant="tool" aria-label="Refresh" disabled><i class="bi bi-arrow-clockwise" aria-hidden="true" /></BaseButton>
 </ComponentPreview>
 
 ```vue
-<BaseButton variant="tool" aria-label="Refresh" title="Refresh">⟳</BaseButton>
+<BaseButton variant="tool" aria-label="Refresh" title="Refresh">
+  <i class="bi bi-arrow-clockwise" aria-hidden="true" />
+</BaseButton>
 ```
 
 For icon-only buttons prefer [BaseIconButton](/components/base-icon-button), which enforces an accessible label.
@@ -85,6 +87,10 @@ No padding, background or border — a clickable shell for custom content such a
 ```vue
 <BaseButton variant="primary" size="small">Small</BaseButton>
 ```
+
+## Copy to clipboard
+
+Use [BaseCopyButton](/components/base-copy-button) for clipboard actions. It wraps BaseButton, owns the clipboard and temporary "Copied" state, and reserves space for both labels so neighboring elements do not move. The dedicated page includes live examples, error handling, and the `useCopyToClipboard` API for custom interactions.
 
 ## Props
 

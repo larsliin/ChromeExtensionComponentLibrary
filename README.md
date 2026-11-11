@@ -7,8 +7,8 @@ A collection of reusable Vue 3 components for building accessible interfaces in 
 ### Actions
 
 - **BaseButton** - Button with primary, secondary, tool, and bare variants
+- **BaseCopyButton** - Clipboard button with temporary success feedback and stable width
 - **BaseIconButton** - Accessible icon-only toolbar button
-- **BaseCopyButton** - Copy action with temporary success feedback
 - **BaseHeroButton** - Large call-to-action with icon and caption
 
 ### Form fields
@@ -26,6 +26,10 @@ A collection of reusable Vue 3 components for building accessible interfaces in 
 - **BaseLoadingBar** - Indeterminate progress indicator
 
 See the [component documentation](docs/components/index.md) for examples and API details.
+
+For copy actions, use [BaseCopyButton](docs/components/base-copy-button.md) for temporary success feedback without layout shifts. The `useCopyToClipboard` composable remains available for custom or shared copy interactions.
+
+All icons use the locally bundled `bootstrap-icons` package. See the [icon setup and usage](docs/guide/theming.md#icons).
 
 ## Design principles
 

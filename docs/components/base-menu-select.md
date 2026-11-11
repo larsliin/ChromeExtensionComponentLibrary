@@ -7,7 +7,7 @@ const themes = [
   { value: 'dark', label: 'Dark' },
   { value: 'auto', label: 'System' },
 ]
-const icons = { light: '☀', dark: '☾', auto: '◐' }
+const icons = { light: 'bi-sun', dark: 'bi-moon', auto: 'bi-circle-half' }
 const theme = ref('dark')
 </script>
 
@@ -19,9 +19,11 @@ The panel uses `position: fixed`, flips above the trigger when there is no room 
 
 <ComponentPreview>
   <BaseMenuSelect v-model="theme" label="Theme" :options="themes">
-    <template #default="{ selected }">{{ icons[selected?.value] }}</template>
+    <template #default="{ selected }">
+      <i class="bi" :class="icons[selected?.value]" aria-hidden="true" />
+    </template>
     <template #option="{ option }">
-      <span aria-hidden="true">{{ icons[option.value] }}</span>
+      <i class="bi" :class="icons[option.value]" aria-hidden="true" />
       {{ option.label }}
     </template>
   </BaseMenuSelect>
@@ -33,11 +35,11 @@ The panel uses `position: fixed`, flips above the trigger when there is no room 
 <BaseMenuSelect v-model="theme" label="Theme" :options="themes">
   <!-- Trigger content; defaults to the selected label -->
   <template #default="{ selected }">
-    <ThemeIcon :theme="selected?.value" />
+    <i class="bi" :class="icons[selected?.value]" aria-hidden="true" />
   </template>
   <!-- Option content; defaults to option.label -->
   <template #option="{ option, selected }">
-    <ThemeIcon :theme="option.value" /> {{ option.label }}
+    <i class="bi" :class="icons[option.value]" aria-hidden="true" /> {{ option.label }}
   </template>
 </BaseMenuSelect>
 ```

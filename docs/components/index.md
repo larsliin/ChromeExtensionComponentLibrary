@@ -7,8 +7,8 @@ A collection of Vue 3 components designed specifically for Chrome extensions.
 ### Actions
 
 - **[BaseButton](/components/base-button)** - Button with `primary`, `secondary`, `tool` and `bare` variants
+- **[BaseCopyButton](/components/base-copy-button)** - Clipboard button with temporary success feedback and stable width
 - **[BaseIconButton](/components/base-icon-button)** - Icon-only toolbar button with required label and toggle state
-- **[BaseCopyButton](/components/base-copy-button)** - Copies text with a temporary "Copied" state (plus `useCopyToClipboard`)
 - **[BaseHeroButton](/components/base-hero-button)** - Large glossy call-to-action with icon, title and caption
 
 ### Form fields
@@ -26,6 +26,8 @@ A collection of Vue 3 components designed specifically for Chrome extensions.
 - **[BaseLoadingBar](/components/base-loading-bar)** - Indeterminate progress bar
 
 ## Usage
+
+For copy actions, use [BaseCopyButton](/components/base-copy-button) for clipboard writes and temporary success feedback. Use `useCopyToClipboard` directly when several controls need to share a copied state.
 
 Install the component library in your Chrome extension project:
 

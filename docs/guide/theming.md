@@ -8,12 +8,26 @@ All component styling comes from CSS custom properties in [`src/styles/tokens.cs
 |------|---------|
 | `src/styles/tokens.css` | Design tokens. **Required.** |
 | `src/styles/base.css` | Optional reset for apps (box-sizing, body font, button font). |
-| `src/styles/index.css` | Imports both. |
+| `src/styles/index.css` | Imports tokens, base styles and Bootstrap Icons. |
 
 ```ts
 // main.ts of a consuming extension
 import 'chrome-extension-component-library/src/styles/index.css'
 ```
+
+## Icons
+
+All component icons use the bundled `bootstrap-icons` package, not a CDN. Importing the library entry point or `src/styles/index.css` loads its icon stylesheet and local font assets. When importing individual component files with only the token stylesheet, also import `bootstrap-icons/font/bootstrap-icons.css`.
+
+Use Bootstrap Icon classes in icon slots, with the accessible name on the control:
+
+```vue
+<BaseButton variant="tool" aria-label="Refresh">
+  <i class="bi bi-arrow-clockwise" aria-hidden="true" />
+</BaseButton>
+```
+
+Icon size follows `font-size`; icons inherit the control's color.
 
 ## Themes
 

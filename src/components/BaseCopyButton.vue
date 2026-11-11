@@ -4,7 +4,6 @@
     import { useCopyToClipboard } from '../composables/useCopyToClipboard';
 
     const props = withDefaults(defineProps<{
-        /** Text written to the clipboard. */
         value: string;
         label?: string;
         copiedLabel?: string;
@@ -32,18 +31,43 @@
     const copied = computed(() => copiedKey.value !== null);
 
     async function handleClick() {
-        if (await copy(props.value)) emit('copied', props.value);
-        else emit('error', error.value ?? '');
+        const value = props.value;
+        if (await copy(value)) emit('copied', value);
+        else emit('error', error.value ?? 'Could not copy to the clipboard.');
     }
 </script>
 
 <template>
-    <BaseButton
-        :variant="variant"
-        :size="size"
-        :aria-label="copied ? copiedLabel : undefined"
-        @click="handleClick"
-    >
-        <slot :copied="copied">{{ copied ? copiedLabel : label }}</slot>
+    <BaseButton :variant="variant" :size="size" aria-live="polite" @click="handleClick">
+        <span class="copy-content">
+            <span
+                v-for="state in [false, true]"
+                :key="String(state)"
+                class="copy-state"
+                :class="{ 'is-hidden': state !== copied }"
+                :aria-hidden="state !== copied"
+            >
+                <slot :copied="state">{{ state ? copiedLabel : label }}</slot>
+            </span>
+        </span>
     </BaseButton>
 </template>
+
+<style scoped>
+.copy-content {
+    display: inline-grid;
+    vertical-align: middle;
+}
+
+.copy-state {
+    grid-area: 1 / 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.is-hidden {
+    visibility: hidden;
+}
+</style>

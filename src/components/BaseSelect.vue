@@ -22,9 +22,7 @@
                 {{ option.label }}
             </option>
         </select>
-        <svg class="select-chevron" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-        </svg>
+        <i class="select-chevron bi bi-chevron-down" aria-hidden="true" />
     </div>
 </template>
 
@@ -68,6 +66,8 @@
         right: 10px;
         width: 12px;
         height: 12px;
+        font-size: 12px;
+        line-height: 1;
         color: var(--color-text-muted);
         transform: translateY(-50%);
         pointer-events: none;

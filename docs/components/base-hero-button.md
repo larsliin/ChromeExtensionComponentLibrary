@@ -9,14 +9,14 @@ Large, glossy call-to-action for a popup's primary action, e.g. "Pick a color fr
 <ComponentPreview>
   <BaseHeroButton>
     <template #icon>
-      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.354.646a1.207 1.207 0 0 0-1.708 0L8.5 3.793l-.646-.647a.5.5 0 1 0-.708.708L8.293 5l-7.147 7.146A.5.5 0 0 0 1 12.5v1.793l-.854.853a.5.5 0 1 0 .708.707L1.707 15H3.5a.5.5 0 0 0 .354-.146L11 7.707l1.146 1.147a.5.5 0 0 0 .708-.708l-.647-.646 3.147-3.146a1.207 1.207 0 0 0 0-1.708z" /></svg>
+      <i class="bi bi-eyedropper" aria-hidden="true" />
     </template>
     Pick a color from screen
     <template #caption>Click to start · Sample colors across your entire screen</template>
   </BaseHeroButton>
   <BaseHeroButton disabled>
     <template #icon>
-      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.354.646a1.207 1.207 0 0 0-1.708 0L8.5 3.793l-.646-.647a.5.5 0 1 0-.708.708L8.293 5l-7.147 7.146A.5.5 0 0 0 1 12.5v1.793l-.854.853a.5.5 0 1 0 .708.707L1.707 15H3.5a.5.5 0 0 0 .354-.146L11 7.707l1.146 1.147a.5.5 0 0 0 .708-.708l-.647-.646 3.147-3.146a1.207 1.207 0 0 0 0-1.708z" /></svg>
+      <i class="bi bi-eyedropper" aria-hidden="true" />
     </template>
     Pick a color from screen
     <template #caption>Unavailable in this version of Chrome</template>
@@ -25,7 +25,7 @@ Large, glossy call-to-action for a popup's primary action, e.g. "Pick a color fr
 
 ```vue
 <BaseHeroButton :disabled="!isAvailable" @click="pickColor">
-  <template #icon><EyeDropperIcon /></template>
+  <template #icon><i class="bi bi-eyedropper" aria-hidden="true" /></template>
   Pick a color from screen
   <template #caption>Click to start · Sample colors across your entire screen</template>
 </BaseHeroButton>
@@ -37,7 +37,7 @@ Large, glossy call-to-action for a popup's primary action, e.g. "Pick a color fr
 |------|-------------|
 | `default` | Title |
 | `caption` | Supporting line under the title |
-| `icon` | Icon in the glossy tile. An `<svg>` is sized to 24px |
+| `icon` | Bootstrap Icon in the glossy tile, sized to 24px |
 
 Native attributes (`disabled`, `aria-label`, ...) and listeners fall through to the `<button>`.
 

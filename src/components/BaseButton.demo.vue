@@ -35,8 +35,8 @@
         </section>
 
         <section class="demo-section">
-            <BaseButton variant="tool" aria-label="Refresh">⟳</BaseButton>
-            <BaseButton variant="tool" aria-label="Refresh" disabled>⟳</BaseButton>
+            <BaseButton variant="tool" aria-label="Refresh"><i class="bi bi-arrow-clockwise" aria-hidden="true" /></BaseButton>
+            <BaseButton variant="tool" aria-label="Refresh" disabled><i class="bi bi-arrow-clockwise" aria-hidden="true" /></BaseButton>
         </section>
     </div>
 </template>

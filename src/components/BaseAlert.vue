@@ -20,26 +20,11 @@
 
 <template>
     <div v-if="message" class="alert" :class="variant" :role="role">
-        <span class="alert-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none">
-                <path
-                    v-if="variant === 'info'"
-                    d="M12 16v-4m0-4h.01M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-                <path
-                    v-else
-                    d="M12 8v5m0 3h.01M10.3 3.8 2.9 17.1A2 2 0 0 0 4.6 20h14.8a2 2 0 0 0 1.7-2.9L13.7 3.8a2 2 0 0 0-3.4 0Z"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-            </svg>
-        </span>
+        <i
+            class="alert-icon bi"
+            :class="variant === 'info' ? 'bi-info-circle' : 'bi-exclamation-triangle'"
+            aria-hidden="true"
+        />
         <p class="message">{{ message }}</p>
         <button
             v-if="dismissible"
@@ -49,9 +34,7 @@
             title="Dismiss"
             @click="$emit('dismiss')"
         >
-            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-            </svg>
+            <i class="bi bi-x" aria-hidden="true" />
         </button>
     </div>
 </template>
@@ -59,11 +42,11 @@
 <style scoped>
     .alert {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         gap: 10px;
         padding: 8px 12px;
         font-family: var(--font-family-base);
-        font-size: 12px;
+        font-size: 14px;
         line-height: 1.4;
         word-break: break-word;
         border-radius: var(--radius-button);
@@ -73,25 +56,23 @@
         display: grid;
         flex-shrink: 0;
         place-items: center;
-        margin-top: 1px;
-    }
-
-    .alert-icon svg {
-        width: 14px;
-        height: 14px;
+        font-size: 18px;
+        line-height: 1;
     }
 
     .message {
         flex: 1;
         margin: 0;
+        font-size: inherit;
+        line-height: inherit;
     }
 
     .dismiss {
         display: grid;
         flex-shrink: 0;
         place-items: center;
-        width: 18px;
-        height: 18px;
+        width: 22px;
+        height: 22px;
         padding: 0;
         color: inherit;
         background: transparent;
@@ -110,9 +91,9 @@
         outline-offset: 1px;
     }
 
-    .dismiss svg {
-        width: 16px;
-        height: 16px;
+    .dismiss .bi {
+        font-size: 22px;
+        line-height: 1;
     }
 
     .alert.error {

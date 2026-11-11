@@ -1,6 +1,7 @@
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import ComponentPreview from './ComponentPreview.vue'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 import '../../../src/styles/tokens.css'
 import './custom.css'
 

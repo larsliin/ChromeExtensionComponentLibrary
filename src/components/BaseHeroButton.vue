@@ -136,6 +136,8 @@
         place-items: center;
         width: 48px;
         height: 48px;
+        font-size: 24px;
+        line-height: 1;
         background-color: var(--color-hero-icon-bg);
         background-image: linear-gradient(180deg, var(--color-hero-icon-sheen) 0%, transparent 100%);
         border: 1px solid var(--color-hero-icon-border);
@@ -145,6 +147,7 @@
             inset 0 -1px 0 var(--color-hero-shadow-inset);
     }
 
+    .hero-icon :deep(.bi),
     .hero-icon :deep(svg) {
         width: 24px;
         height: 24px;
@@ -156,6 +159,7 @@
         border-color: var(--color-hero-disabled-icon-border);
     }
 
+    .hero-button:disabled .hero-icon :deep(.bi),
     .hero-button:disabled .hero-icon :deep(svg) {
         filter: none;
     }
