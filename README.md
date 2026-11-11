@@ -38,19 +38,36 @@ All icons use the locally bundled `bootstrap-icons` package. See the [icon setup
 - Shared CSS design tokens, with dark and light themes
 - Small dependency footprint; CodeMirror remains optional
 
-## Install in another project
+## Build and install from GitHub
 
-### Install from GitHub
+### In the component library repository
 
-1. Commit and push the package source, build configuration, and `prepare` script to the branch you want to install. Do not commit `dist/`; the `prepare` script builds it during installation.
-2. In the consuming Vue 3 project, install the package from GitHub:
+1. Install the development dependencies. The `prepare` script also builds the package:
+
+   ```bash
+   npm install
+   ```
+
+2. After making component changes, run the package build to type-check and verify the output:
+
+   ```bash
+   npm run build
+   ```
+
+   This creates the distributable files in `dist/`. Keep `dist/` out of Git; Git-based installs rebuild it from source.
+3. Commit and push the package source, build configuration, and `prepare` script to the branch you plan to install, for example `main`.
+
+### In the consuming project
+
+1. Make sure the GitHub repository is public or that the installing user has access.
+2. From the consuming Vue 3 project's directory, install the library and Vue:
 
    ```bash
    npm install github:larsliin/ChromeExtensionsComponentLibrary#main vue
    ```
 
-   The repository must be public or the installing user must have GitHub access.
-3. Import the library stylesheet once in the app entry point, then import components where needed:
+   npm fetches the pushed repository and runs its `prepare` script, which builds `dist/` for the installed package. No tarball or committed build output is needed.
+3. Import the stylesheet once in the app entry point and import components where needed:
 
    ```ts
    // src/main.ts
@@ -67,15 +84,7 @@ All icons use the locally bundled `bootstrap-icons` package. See the [icon setup
    </template>
    ```
 
-### Install from npm
-
-After publishing the package, install it with:
-
-```bash
-npm install chrome-extension-component-library vue
-```
-
-The CodeMirror editor is available separately from `chrome-extension-component-library/code-editor`. Install its peer dependencies only if you use it.
+The CodeMirror editor is available separately from `chrome-extension-component-library/code-editor`. Install its peer dependencies only if you use it. After publishing to npm, projects can instead install it with `npm install chrome-extension-component-library vue`.
 
 ## Development
 
@@ -97,30 +106,15 @@ Run the documentation site at `http://localhost:9001`:
 npm run docs:dev
 ```
 
-## Build
+## Other build commands
 
-From the library repository root:
+To create an optional local tarball (not required for GitHub installs):
 
-1. Install the development dependencies:
+```bash
+npm pack
+```
 
-   ```bash
-   npm install
-   ```
-
-2. Build and type-check the installable package (ES modules, CSS, and TypeScript declarations):
-
-   ```bash
-   npm run build
-   ```
-
-   GitHub installs run this build automatically through `prepare`.
-3. Optionally create a local tarball:
-
-   ```bash
-   npm pack
-   ```
-
-   npm writes a `.tgz` file to the current directory. Install it in another project with `npm install <path-to-tarball>`. You can publish it with `npm publish` when ready to release.
+npm runs `prepare` and writes a `.tgz` file to the current directory. Install it in another project with `npm install <path-to-tarball>`.
 
 Build the demo app instead:
 
