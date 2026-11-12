@@ -13,7 +13,7 @@ A collection of reusable Vue 3 components for building accessible interfaces in 
 
 ### Lists
 
-- **[BaseListItem](docs/components/base-list-item.md)** - Icon, headline, optional description, and any number of slotted actions
+- **[BaseListItem](docs/components/base-list-item.md)** - Built-in product icon and a default slot for custom row content
 
 ### Form fields
 

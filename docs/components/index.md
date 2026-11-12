@@ -17,7 +17,7 @@ A collection of Vue 3 components designed specifically for Chrome extensions.
 
 ### Lists
 
-- **[BaseListItem](/components/base-list-item)** - Icon, headline, optional description, and any number of slotted actions
+- **[BaseListItem](/components/base-list-item)** - Built-in product icon and a default slot for custom row content
 
 ### Form fields
 
