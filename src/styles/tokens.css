@@ -68,6 +68,12 @@
     --color-accent-active: var(--palette-green-700);
     --color-on-accent: var(--palette-white);
 
+    --color-button-secondary: #363636;
+    --color-button-secondary-border: #626262;
+    --color-button-secondary-hover: #424242;
+    --color-button-secondary-border-hover: #7a7a7a;
+    --shadow-list-item: 0 2px 8px rgb(0 0 0 / 8%);
+
     --color-error: #ef4444;
     --color-error-bg: rgb(220 38 38 / 15%);
     --color-error-border: rgb(220 38 38 / 30%);
@@ -108,6 +114,12 @@
     --color-accent-hover: var(--palette-green-600);
     --color-accent-active: var(--palette-green-700);
     --color-on-accent: var(--palette-white);
+
+    --color-button-secondary: #e5e7eb;
+    --color-button-secondary-border: #9ca3af;
+    --color-button-secondary-hover: #d1d5db;
+    --color-button-secondary-border-hover: #6b7280;
+    --shadow-list-item: 0 2px 8px rgb(0 0 0 / 8%);
 
     --color-error: #b91c1c;
     --color-error-bg: rgb(220 38 38 / 10%);

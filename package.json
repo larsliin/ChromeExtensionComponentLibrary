@@ -26,6 +26,7 @@
     "dev": "vite",
     "build": "vue-tsc -b && vite build --mode package && vue-tsc -p tsconfig.lib.json",
     "build:demo": "vue-tsc -b && vite build",
+    "test": "npm run build && node --test",
     "preview": "vite preview",
     "docs:dev": "vitepress dev docs --port 9001",
     "docs:build": "vitepress build docs",
