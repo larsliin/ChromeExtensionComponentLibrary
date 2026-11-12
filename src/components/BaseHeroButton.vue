@@ -1,23 +1,13 @@
 <script setup lang="ts">
     defineSlots<{
-        /** Title text. */
+        /** Button content and layout. */
         default: () => unknown;
-        /** Supporting line under the title. */
-        caption?: () => unknown;
-        /** Icon shown in the glossy tile; sized to 24px. */
-        icon?: () => unknown;
     }>();
 </script>
 
 <template>
     <button type="button" class="hero-button">
-        <span v-if="$slots.icon" class="hero-icon" aria-hidden="true">
-            <slot name="icon" />
-        </span>
-        <span class="hero-copy">
-            <span class="hero-title"><slot /></span>
-            <span v-if="$slots.caption" class="hero-caption"><slot name="caption" /></span>
-        </span>
+        <slot />
     </button>
 </template>
 
@@ -99,13 +89,6 @@
         opacity: 0.7;
     }
 
-    .hero-button:active:not(:disabled) .hero-icon {
-        background-image: linear-gradient(0deg, var(--color-hero-icon-sheen) 0%, transparent 100%);
-        box-shadow:
-            inset 0 2px 3px var(--color-hero-shadow-active),
-            inset 0 -1px 0 var(--color-hero-icon-border);
-    }
-
     .hero-button:disabled {
         --color-hero-gloss-start: var(--color-hero-disabled-gloss-start);
         --color-hero-gloss-end: var(--color-hero-disabled-gloss-end);
@@ -128,64 +111,6 @@
     .hero-button:focus-visible {
         outline: 2px solid var(--color-focus);
         outline-offset: 3px;
-    }
-
-    .hero-icon {
-        display: grid;
-        flex: 0 0 48px;
-        place-items: center;
-        width: 48px;
-        height: 48px;
-        font-size: 24px;
-        line-height: 1;
-        background-color: var(--color-hero-icon-bg);
-        background-image: linear-gradient(180deg, var(--color-hero-icon-sheen) 0%, transparent 100%);
-        border: 1px solid var(--color-hero-icon-border);
-        border-radius: 14px;
-        box-shadow:
-            inset 0 1px 0 var(--color-hero-gloss-start),
-            inset 0 -1px 0 var(--color-hero-shadow-inset);
-    }
-
-    .hero-icon :deep(.bi),
-    .hero-icon :deep(svg) {
-        width: 24px;
-        height: 24px;
-        filter: drop-shadow(0 1px 1px var(--color-hero-text-shadow));
-    }
-
-    .hero-button:disabled .hero-icon {
-        background-color: var(--color-hero-disabled-icon-bg);
-        border-color: var(--color-hero-disabled-icon-border);
-    }
-
-    .hero-button:disabled .hero-icon :deep(.bi),
-    .hero-button:disabled .hero-icon :deep(svg) {
-        filter: none;
-    }
-
-    .hero-copy {
-        display: flex;
-        flex-direction: column;
-        gap: 3px;
-        min-width: 0;
-    }
-
-    .hero-title {
-        font-size: 15px;
-        font-weight: 700;
-        line-height: 1.25;
-    }
-
-    .hero-caption {
-        font-size: 11px;
-        font-weight: 500;
-        line-height: 1.35;
-        color: var(--color-hero-caption);
-    }
-
-    .hero-button:disabled .hero-caption {
-        color: var(--color-hero-disabled-text);
     }
 
     @media (prefers-reduced-motion: reduce) {

@@ -4,30 +4,32 @@ import BaseHeroButton from '../../src/components/BaseHeroButton.vue'
 
 # BaseHeroButton
 
-Large, glossy call-to-action for a popup's primary action, e.g. "Pick a color from screen". Full width with an icon tile, title and caption.
+Large, glossy, full-width call-to-action. A single default slot gives you control over all button content and its layout.
 
 <ComponentPreview>
   <BaseHeroButton>
-    <template #icon>
-      <i class="bi bi-eyedropper" aria-hidden="true" />
-    </template>
-    Pick a color from screen
-    <template #caption>Click to start · Sample colors across your entire screen</template>
+    <i class="bi bi-eyedropper" aria-hidden="true" />
+    <span>
+      <strong>Pick a color from screen</strong><br>
+      <small>Click to start · Sample colors across your entire screen</small>
+    </span>
   </BaseHeroButton>
   <BaseHeroButton disabled>
-    <template #icon>
-      <i class="bi bi-eyedropper" aria-hidden="true" />
-    </template>
-    Pick a color from screen
-    <template #caption>Unavailable in this version of Chrome</template>
+    <i class="bi bi-eyedropper" aria-hidden="true" />
+    <span>
+      <strong>Pick a color from screen</strong><br>
+      <small>Unavailable in this version of Chrome</small>
+    </span>
   </BaseHeroButton>
 </ComponentPreview>
 
 ```vue
 <BaseHeroButton :disabled="!isAvailable" @click="pickColor">
-  <template #icon><i class="bi bi-eyedropper" aria-hidden="true" /></template>
-  Pick a color from screen
-  <template #caption>Click to start · Sample colors across your entire screen</template>
+  <i class="bi bi-eyedropper" aria-hidden="true" />
+  <span>
+    <strong>Pick a color from screen</strong><br>
+    <small>Click to start · Sample colors across your entire screen</small>
+  </span>
 </BaseHeroButton>
 ```
 
@@ -35,12 +37,14 @@ Large, glossy call-to-action for a popup's primary action, e.g. "Pick a color fr
 
 | Slot | Description |
 |------|-------------|
-| `default` | Title |
-| `caption` | Supporting line under the title |
-| `icon` | Bootstrap Icon in the glossy tile, sized to 24px |
+| `default` | All button content, including any icons, title, caption, or custom layout |
+
+Style slotted content in the consuming component. The button provides its surface, spacing, focus, pressed and disabled states, but does not wrap or style an icon, title or caption.
+
+The former `icon` and `caption` named slots are no longer supported. Move their markup into the default slot and provide any content-specific styles in the parent. Keep content valid for a native button: use non-interactive content and do not nest links or controls.
 
 Native attributes (`disabled`, `aria-label`, ...) and listeners fall through to the `<button>`.
 
 ## Tokens used
 
-All `--color-hero-*` tokens (surface gradient, gloss, shadows, icon tile, and the `--color-hero-disabled-*` set, which differs per theme), plus `--color-focus` and `--font-family-base`. Override the `--color-hero-gradient-*` tokens to rebrand the surface.
+The surface, gradient, gloss, shadow, text, border and disabled surface tokens from `--color-hero-*`, plus `--color-focus` and `--font-family-base`. Override the `--color-hero-gradient-*` tokens to rebrand the surface. The shared icon and caption tokens remain available for use in consumer-owned content styles.

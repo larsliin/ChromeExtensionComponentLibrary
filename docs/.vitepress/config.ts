@@ -29,6 +29,7 @@ export default defineConfig({
           { text: 'BaseLoadingBar', link: '/components/base-loading-bar' },
           { text: 'BaseMenuSelect', link: '/components/base-menu-select' },
           { text: 'BaseNumberInput', link: '/components/base-number-input' },
+          { text: 'BaseProductIcon', link: '/components/base-product-icon' },
           { text: 'BaseRangeInput', link: '/components/base-range-input' },
           { text: 'BaseSelect', link: '/components/base-select' },
         ],

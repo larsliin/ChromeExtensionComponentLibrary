@@ -7,6 +7,7 @@ export { default as BaseIconButton } from './components/BaseIconButton.vue';
 export { default as BaseLoadingBar } from './components/BaseLoadingBar.vue';
 export { default as BaseMenuSelect } from './components/BaseMenuSelect.vue';
 export { default as BaseNumberInput } from './components/BaseNumberInput.vue';
+export { default as BaseProductIcon } from './components/BaseProductIcon.vue';
 export { default as BaseRangeInput } from './components/BaseRangeInput.vue';
 export { default as BaseSelect } from './components/BaseSelect.vue';
 export { useCopyToClipboard } from './composables/useCopyToClipboard';

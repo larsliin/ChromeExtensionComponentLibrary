@@ -9,7 +9,7 @@ A collection of reusable Vue 3 components for building accessible interfaces in 
 - **BaseButton** - Button with primary, secondary, tool, and bare variants
 - **BaseCopyButton** - Clipboard button with temporary success feedback and stable width
 - **BaseIconButton** - Accessible icon-only toolbar button
-- **BaseHeroButton** - Large call-to-action with icon and caption
+- **BaseHeroButton** - Large glossy call-to-action with custom slot content
 
 ### Form fields
 
