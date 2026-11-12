@@ -25,7 +25,7 @@ A collection of reusable Vue 3 components for building accessible interfaces in 
 - **BaseAlert** - Error, warning, and information messages
 - **BaseLoadingBar** - Indeterminate progress indicator
 
-See the [quick component overview](COMPONENTS.md) for a catalog before cloning, or the [component documentation](docs/components/index.md) for examples and API details.
+See the [component documentation](docs/components/index.md) for the component overview, examples, and API details.
 
 For copy actions, use [BaseCopyButton](docs/components/base-copy-button.md) for temporary success feedback without layout shifts. The `useCopyToClipboard` composable remains available for custom or shared copy interactions.
 
