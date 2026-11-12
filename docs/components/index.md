@@ -13,7 +13,7 @@ A collection of Vue 3 components designed specifically for Chrome extensions.
 
 ### Branding
 
-- **[BaseProductIcon](/components/base-product-icon)** - Green rounded product badge with a default icon and slot for custom icons
+- **[BaseProductIcon](/components/base-product-icon)** - Solid product or bordered link-mark badge with a default icon and slot for custom icons
 
 ### Lists
 

@@ -1,13 +1,17 @@
 <script setup lang="ts">
-    defineProps<{
+    withDefaults(defineProps<{
+        type?: 'product' | 'link-mark';
         /** Accessible name. Omit when the product name is already visible nearby so the icon stays decorative. */
         label?: string;
-    }>();
+    }>(), {
+        type: 'product',
+    });
 </script>
 
 <template>
     <span
         class="product-icon"
+        :class="{ 'product-icon--link-mark': type === 'link-mark' }"
         :role="label ? 'img' : undefined"
         :aria-label="label"
         :aria-hidden="label ? undefined : 'true'"
@@ -30,6 +34,7 @@
         display: inline-grid;
         flex: 0 0 auto;
         place-items: center;
+        box-sizing: border-box;
         width: var(--product-icon-size);
         height: var(--product-icon-size);
         border-radius: 23%;
@@ -37,6 +42,13 @@
         color: var(--color-on-accent);
         font-size: calc(var(--product-icon-size) * 0.6875);
         line-height: 1;
+    }
+
+    .product-icon--link-mark {
+        border: 1px solid var(--color-border);
+        background-color: var(--color-bg);
+        color: var(--color-accent);
+        font-size: calc(var(--product-icon-size) * 0.5625);
     }
 
     .product-icon__default,
