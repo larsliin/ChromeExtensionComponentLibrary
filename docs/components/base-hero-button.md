@@ -1,5 +1,6 @@
 <script setup>
 import BaseHeroButton from '../../src/components/BaseHeroButton.vue'
+import './base-hero-button-example.css'
 </script>
 
 # BaseHeroButton
@@ -7,15 +8,23 @@ import BaseHeroButton from '../../src/components/BaseHeroButton.vue'
 Large, glossy, full-width call-to-action. A single default slot gives you control over all button content and its layout.
 
 <ComponentPreview>
-  <BaseHeroButton>
-    <i class="bi bi-eyedropper" aria-hidden="true" />
+  <BaseHeroButton class="hero-example-button">
+    <span class="hero-example-icon" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="currentColor">
+        <path d="M13.354.646a1.207 1.207 0 0 0-1.708 0L8.5 3.793l-.646-.647a.5.5 0 1 0-.708.708L8.293 5l-7.147 7.146A.5.5 0 0 0 1 12.5v1.793l-.854.853a.5.5 0 1 0 .708.707L1.707 15H3.5a.5.5 0 0 0 .354-.146L11 7.707l1.146 1.147a.5.5 0 0 0 .708-.708l-.647-.646 3.147-3.146a1.207 1.207 0 0 0 0-1.708zM2 12.707l7-7L10.293 7l-7 7H2z" />
+      </svg>
+    </span>
     <span>
       <strong>Pick a color from screen</strong><br>
       <small>Click to start · Sample colors across your entire screen</small>
     </span>
   </BaseHeroButton>
-  <BaseHeroButton disabled>
-    <i class="bi bi-eyedropper" aria-hidden="true" />
+  <BaseHeroButton class="hero-example-button" disabled>
+    <span class="hero-example-icon" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="currentColor">
+        <path d="M13.354.646a1.207 1.207 0 0 0-1.708 0L8.5 3.793l-.646-.647a.5.5 0 1 0-.708.708L8.293 5l-7.147 7.146A.5.5 0 0 0 1 12.5v1.793l-.854.853a.5.5 0 1 0 .708.707L1.707 15H3.5a.5.5 0 0 0 .354-.146L11 7.707l1.146 1.147a.5.5 0 0 0 .708-.708l-.647-.646 3.147-3.146a1.207 1.207 0 0 0 0-1.708zM2 12.707l7-7L10.293 7l-7 7H2z" />
+      </svg>
+    </span>
     <span>
       <strong>Pick a color from screen</strong><br>
       <small>Unavailable in this version of Chrome</small>
@@ -24,14 +33,22 @@ Large, glossy, full-width call-to-action. A single default slot gives you contro
 </ComponentPreview>
 
 ```vue
-<BaseHeroButton :disabled="!isAvailable" @click="pickColor">
-  <i class="bi bi-eyedropper" aria-hidden="true" />
+<BaseHeroButton class="hero-example-button" :disabled="!isAvailable" @click="pickColor">
+  <span class="hero-example-icon" aria-hidden="true">
+    <svg viewBox="0 0 16 16" fill="currentColor">
+      <path d="M13.354.646a1.207 1.207 0 0 0-1.708 0L8.5 3.793l-.646-.647a.5.5 0 1 0-.708.708L8.293 5l-7.147 7.146A.5.5 0 0 0 1 12.5v1.793l-.854.853a.5.5 0 1 0 .708.707L1.707 15H3.5a.5.5 0 0 0 .354-.146L11 7.707l1.146 1.147a.5.5 0 0 0 .708-.708l-.647-.646 3.147-3.146a1.207 1.207 0 0 0 0-1.708zM2 12.707l7-7L10.293 7l-7 7H2z" />
+    </svg>
+  </span>
   <span>
     <strong>Pick a color from screen</strong><br>
     <small>Click to start · Sample colors across your entire screen</small>
   </span>
 </BaseHeroButton>
 ```
+
+The example uses the same 24px eyedropper inside a 48px tile with a 14px corner radius as the ColorPicker app. Add these example-specific styles to the consuming component's stylesheet (or its `<style scoped>` block):
+
+<<< @/components/base-hero-button-example.css
 
 ## Slots
 

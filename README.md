@@ -8,14 +8,19 @@ A collection of reusable Vue 3 components for building accessible interfaces in 
 
 - **BaseButton** - Button with primary, secondary, tool, and bare variants
 - **BaseCopyButton** - Clipboard button with temporary success feedback and stable width
-- **BaseIconButton** - Accessible icon-only toolbar button
+- **BaseIconButton** - Accessible icon-only button with toolbar, primary, and filled secondary variants
 - **BaseHeroButton** - Large glossy call-to-action with custom slot content
+
+### Lists
+
+- **[BaseListItem](docs/components/base-list-item.md)** - Icon, headline, optional description, and any number of slotted actions
 
 ### Form fields
 
 - **BaseSelect** - Native select field
 - **BaseMenuSelect** - Compact custom dropdown
 - **BaseCheckbox** - Checkbox with optional label
+- **[BaseSwitch](docs/components/base-switch.md)** - Compact labeled on/off control
 - **BaseNumberInput** - Number field
 - **BaseRangeInput** - Range slider
 - **BaseCodeEditor** - CodeMirror editor; CodeMirror is an optional peer dependency
@@ -126,4 +131,10 @@ Build the documentation site:
 
 ```bash
 npm run docs:build
+```
+
+Build the library and run the component regression tests:
+
+```bash
+npm test
 ```
