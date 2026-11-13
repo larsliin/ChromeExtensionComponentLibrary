@@ -46,7 +46,7 @@ const mode = ref<'analogic' | 'complement'>('analogic')
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `v-model` | `T extends string` | — | Selected value. Required |
-| `options` | `SelectOption<T>[]` | — | `{ value, label, disabled? }` |
+| `options` | `SelectOption<T>[]` | — | `{ value, label, title?, disabled? }`; option tooltip falls back to its label |
 
 Attributes (`id`, `disabled`, `aria-label`, ...) are forwarded to the `<select>`, not the wrapper. Always give it an accessible name via a `<label for>` or `aria-label`.
 

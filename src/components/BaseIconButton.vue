@@ -4,6 +4,8 @@
     withDefaults(defineProps<{
         /** Accessible name; also used as the tooltip. Required because the button has no visible text. */
         label: string;
+        /** Optional tooltip, falling back to the accessible label. */
+        title?: string;
         /** Toggle state. Leave undefined for plain action buttons so `aria-pressed` is omitted. */
         active?: boolean;
         variant?: 'tool' | 'primary' | 'secondary';
@@ -18,7 +20,7 @@
         :variant="variant"
         :class="{ 'is-active': active, 'action-icon-button': variant !== 'tool' }"
         :aria-label="label"
-        :title="label"
+        :title="title || label"
         :aria-pressed="active"
     >
         <slot />

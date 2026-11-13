@@ -9,6 +9,7 @@ A collection of Vue 3 components designed specifically for Chrome extensions.
 - **[BaseButton](/components/base-button)** - Button with `primary`, `secondary`, `tool` and `bare` variants
 - **[BaseCopyButton](/components/base-copy-button)** - Clipboard button with temporary success feedback and stable width
 - **[BaseIconButton](/components/base-icon-button)** - Icon-only toolbar, primary, or filled secondary button with required label and toggle state
+- **[BaseToggleGroup](/components/base-toggle-group)** - Data-driven icon actions with optional split-button radio submenus
 - **[BaseHeroButton](/components/base-hero-button)** - Large glossy call-to-action with custom slot content
 
 ### Branding

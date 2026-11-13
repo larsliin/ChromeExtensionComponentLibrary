@@ -2,11 +2,16 @@
     import { computed, nextTick, onBeforeUnmount, shallowRef, useId, useTemplateRef, watch } from 'vue';
     import type { SelectOption } from '../types';
 
-    const props = defineProps<{
+    const props = withDefaults(defineProps<{
         /** Accessible name, e.g. "Theme". Announced together with the selected label. */
         label: string;
         options: readonly SelectOption<T>[];
-    }>();
+        /** Optional trigger tooltip, falling back to the accessible trigger label. */
+        title?: string;
+        disabled?: boolean;
+    }>(), {
+        disabled: false,
+    });
 
     const model = defineModel<T>({ required: true });
 
@@ -20,30 +25,60 @@
     const trigger = useTemplateRef<HTMLButtonElement>('trigger');
     const panel = useTemplateRef<HTMLDivElement>('panel');
     const panelId = useId();
-    const panelStyle = shallowRef<Record<string, string>>({});
+    const panelStyle = shallowRef<Record<string, string>>({ visibility: 'hidden' });
 
     const selectedOption = computed(() => props.options.find((option) => option.value === model.value) ?? null);
     const triggerLabel = computed(() => `${props.label}: ${selectedOption.value?.label ?? 'None'}`);
     const enabledIndexes = computed(() => props.options.flatMap((option, index) => (option.disabled ? [] : [index])));
+    const tabbableIndex = computed(() => {
+        const selectedIndex = props.options.findIndex((option) => option.value === model.value && !option.disabled);
+        return selectedIndex >= 0 ? selectedIndex : (enabledIndexes.value[0] ?? -1);
+    });
 
-    async function positionPanel() {
-        const triggerRect = trigger.value?.getBoundingClientRect();
-        if (!triggerRect) return;
+    let positioning: Promise<void> | undefined;
+    let needsPosition = false;
 
-        panelStyle.value = { top: `${triggerRect.bottom + 6}px`, left: `${triggerRect.left}px` };
-        await nextTick();
+    function positionPanel(): Promise<void> {
+        needsPosition = true;
+        if (positioning) return positioning;
 
-        const panelRect = panel.value?.getBoundingClientRect();
-        if (!panelRect) return;
+        positioning = (async () => {
+            while (needsPosition && open.value) {
+                needsPosition = false;
+                const margin = Math.min(8, window.innerWidth / 2, window.innerHeight / 2);
+                const maxWidth = Math.max(window.innerWidth - margin * 2, 0);
+                const maxHeight = Math.max(window.innerHeight - margin * 2, 0);
+                panelStyle.value = { ...panelStyle.value, maxWidth: `${maxWidth}px`, maxHeight: `${maxHeight}px` };
+                await nextTick();
+                if (!open.value) return;
+                if (needsPosition) continue;
 
-        // Right-align with the trigger, then clamp into the viewport and flip above if there is no room below.
-        const margin = 8;
-        const panelWidth = Math.min(panelRect.width, Math.max(window.innerWidth - margin * 2, 0));
-        const left = Math.min(Math.max(margin, triggerRect.right - panelWidth), window.innerWidth - panelWidth - margin);
-        const top = triggerRect.bottom + panelRect.height + margin <= window.innerHeight
-            ? triggerRect.bottom + 6
-            : Math.max(margin, triggerRect.top - panelRect.height - 6);
-        panelStyle.value = { top: `${top}px`, left: `${left}px` };
+                const triggerRect = trigger.value?.getBoundingClientRect();
+                const panelRect = panel.value?.getBoundingClientRect();
+                if (!triggerRect || !panelRect) return;
+
+                const panelWidth = Math.min(panelRect.width, maxWidth);
+                const panelHeight = Math.min(panelRect.height, maxHeight);
+                const maxLeft = Math.max(window.innerWidth - panelWidth - margin, margin);
+                const left = Math.min(Math.max(margin, triggerRect.right - panelWidth), maxLeft);
+                const below = triggerRect.bottom + 6 + panelHeight <= window.innerHeight - margin;
+                const above = triggerRect.top - 6 - panelHeight >= margin;
+                const top = below
+                    ? triggerRect.bottom + 6
+                    : above
+                        ? triggerRect.top - panelHeight - 6
+                        : Math.min(Math.max(margin, triggerRect.bottom + 6), Math.max(margin, window.innerHeight - panelHeight - margin));
+                panelStyle.value = {
+                    top: `${top}px`,
+                    left: `${left}px`,
+                    maxWidth: `${maxWidth}px`,
+                    maxHeight: `${maxHeight}px`,
+                    visibility: 'visible',
+                };
+                await nextTick();
+            }
+        })().finally(() => { positioning = undefined; });
+        return positioning;
     }
 
     function closeOnOutsidePointer(event: PointerEvent) {
@@ -56,22 +91,25 @@
         window.removeEventListener('scroll', positionPanel, true);
     }
 
-    watch(open, (isOpen) => {
+    watch(open, async (isOpen, _wasOpen, onCleanup) => {
         if (!isOpen) {
             removeListeners();
             return;
         }
+        let cancelled = false;
+        onCleanup(() => { cancelled = true; });
         document.addEventListener('pointerdown', closeOnOutsidePointer);
         window.addEventListener('resize', positionPanel);
         window.addEventListener('scroll', positionPanel, true);
-        void positionPanel();
+        await positionPanel();
+        if (!cancelled && open.value) void focusOption(tabbableIndex.value);
     });
 
     onBeforeUnmount(removeListeners);
 
     async function focusOption(index: number) {
         await nextTick();
-        panel.value?.querySelectorAll<HTMLButtonElement>('[role="radio"]')[index]?.focus();
+        if (open.value) panel.value?.querySelectorAll<HTMLButtonElement>('[role="radio"]')[index]?.focus();
     }
 
     function close() {
@@ -80,11 +118,8 @@
     }
 
     function toggle() {
+        if (!open.value) panelStyle.value = { ...panelStyle.value, visibility: 'hidden' };
         open.value = !open.value;
-        if (open.value) {
-            const selectedIndex = props.options.findIndex((option) => option.value === model.value);
-            void focusOption(selectedIndex >= 0 ? selectedIndex : (enabledIndexes.value[0] ?? 0));
-        }
     }
 
     function selectOption(option: SelectOption<T>) {
@@ -103,11 +138,14 @@
     // Radio-group semantics: arrow keys move focus and select, skipping disabled options.
     function handleOptionKeydown(event: KeyboardEvent, index: number) {
         const enabled = enabledIndexes.value;
+        if (enabled.length === 0) return;
         const position = enabled.indexOf(index);
         let next: number | undefined;
-        if (event.key === 'ArrowDown' || event.key === 'ArrowRight') next = enabled[(position + 1) % enabled.length];
-        else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') next = enabled[(position - 1 + enabled.length) % enabled.length];
-        else if (event.key === 'Home') next = enabled[0];
+        if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+            next = enabled[position === -1 ? 0 : (position + 1) % enabled.length];
+        } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+            next = enabled[position === -1 ? enabled.length - 1 : (position - 1 + enabled.length) % enabled.length];
+        } else if (event.key === 'Home') next = enabled[0];
         else if (event.key === 'End') next = enabled[enabled.length - 1];
         if (next === undefined) return;
 
@@ -117,10 +155,32 @@
     }
 
     function closeOnFocusLeave(event: FocusEvent) {
-        if (open.value && event.relatedTarget instanceof Node && !root.value?.contains(event.relatedTarget)) {
+        if (!open.value) return;
+        if (event.relatedTarget instanceof Node && !root.value?.contains(event.relatedTarget)) {
             open.value = false;
+            return;
         }
+        void nextTick(() => {
+            if (open.value && !root.value?.contains(document.activeElement)) open.value = false;
+        });
     }
+
+    watch(
+        () => [model.value, props.disabled, props.options.map((option) => [option.value, option.label, option.title, option.disabled])],
+        () => {
+            if (!open.value) return;
+            if (props.disabled || enabledIndexes.value.length === 0) {
+                open.value = false;
+                return;
+            }
+            const hadOptionFocus = panel.value?.contains(document.activeElement) ?? false;
+            void nextTick(() => {
+                if (!open.value) return;
+                void positionPanel();
+                if (hadOptionFocus) void focusOption(tabbableIndex.value);
+            });
+        },
+    );
 </script>
 
 <template>
@@ -135,10 +195,10 @@
             class="menu-select__trigger"
             type="button"
             :aria-label="triggerLabel"
-            :title="triggerLabel"
+            :title="title || triggerLabel"
             :aria-expanded="open"
             :aria-controls="panelId"
-            :disabled="enabledIndexes.length === 0"
+            :disabled="disabled || enabledIndexes.length === 0"
             @click="toggle"
         >
             <slot :selected="selectedOption">{{ selectedOption?.label }}</slot>
@@ -161,7 +221,8 @@
                 role="radio"
                 :aria-checked="option.value === model"
                 :disabled="option.disabled"
-                :tabindex="option.value === model || (!selectedOption && index === enabledIndexes[0]) ? 0 : -1"
+                :title="option.title || option.label"
+                :tabindex="index === tabbableIndex ? 0 : -1"
                 @click="selectOption(option)"
                 @keydown="handleOptionKeydown($event, index)"
             >
@@ -217,6 +278,7 @@
     .menu-select__panel {
         position: fixed;
         z-index: 40;
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
         gap: 4px;

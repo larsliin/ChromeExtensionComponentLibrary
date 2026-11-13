@@ -7,7 +7,7 @@ const panActive = ref(false)
 
 # BaseIconButton
 
-Square icon-only button with toolbar, primary, and filled secondary variants. Requires a `label`, which becomes both the `aria-label` and the tooltip. The default `tool` variant preserves the existing toolbar appearance.
+Square icon-only button with toolbar, primary, and filled secondary variants. Requires a `label` for its `aria-label`; by default it is also the tooltip. The optional `title` prop customizes the tooltip without changing the accessible name. The default `tool` variant preserves the existing toolbar appearance.
 
 <ComponentPreview>
   <BaseIconButton label="Refresh config">
@@ -63,7 +63,8 @@ Use `primary` for a prominent action and `secondary` for a neutral action, such 
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `label` | `string` | — | Accessible name and tooltip. Required |
+| `label` | `string` | — | Accessible name. Required |
+| `title` | `string` | `label` | Optional tooltip |
 | `active` | `boolean` | — | Toggle state. Sets `aria-pressed` and the active style. Omit for plain action buttons |
 | `variant` | `'tool' \| 'primary' \| 'secondary'` | `'tool'` | Toolbar, accent-filled, or neutral-filled appearance |
 

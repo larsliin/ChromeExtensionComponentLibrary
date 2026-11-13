@@ -34,6 +34,7 @@ export default defineConfig({
           { text: 'BaseRangeInput', link: '/components/base-range-input' },
           { text: 'BaseSelect', link: '/components/base-select' },
           { text: 'BaseSwitch', link: '/components/base-switch' },
+          { text: 'BaseToggleGroup', link: '/components/base-toggle-group' },
         ],
       },
     ],

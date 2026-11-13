@@ -12,5 +12,6 @@ export { default as BaseProductIcon } from './components/BaseProductIcon.vue';
 export { default as BaseRangeInput } from './components/BaseRangeInput.vue';
 export { default as BaseSelect } from './components/BaseSelect.vue';
 export { default as BaseSwitch } from './components/BaseSwitch.vue';
+export { default as BaseToggleGroup } from './components/BaseToggleGroup.vue';
 export { useCopyToClipboard } from './composables/useCopyToClipboard';
-export type { SelectOption } from './types';
+export type { BaseToggleGroupAction, BaseToggleGroupSubAction, SelectOption } from './types';
