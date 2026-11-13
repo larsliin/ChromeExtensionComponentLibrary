@@ -16,7 +16,7 @@ export interface BaseToggleGroupSubAction {
     disabled?: boolean;
 }
 
-/** A toolbar action, optionally with a radio-style submenu. */
+/** A toolbar action: a toggle button, or a fold-out radio menu when `subActions` is set. */
 export interface BaseToggleGroupAction {
     id: string;
     label: string;

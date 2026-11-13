@@ -155,14 +155,12 @@
     }
 
     function closeOnFocusLeave(event: FocusEvent) {
-        if (!open.value) return;
-        if (event.relatedTarget instanceof Node && !root.value?.contains(event.relatedTarget)) {
+        // A null relatedTarget means focus left the window or landed on non-focusable content; outside
+        // presses are handled by closeOnOutsidePointer. Checking activeElement here is unreliable because
+        // focus has not moved yet, which would close the panel before an option's click registers.
+        if (open.value && event.relatedTarget instanceof Node && !root.value?.contains(event.relatedTarget)) {
             open.value = false;
-            return;
         }
-        void nextTick(() => {
-            if (open.value && !root.value?.contains(document.activeElement)) open.value = false;
-        });
     }
 
     watch(

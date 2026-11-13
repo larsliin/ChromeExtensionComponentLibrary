@@ -10,7 +10,7 @@ async function render(component, props) {
     }));
 }
 
-test('toggle group renders labeled main actions and split radio submenus', async () => {
+test('toggle group renders toggle buttons and a single fold-out trigger per nested action', async () => {
     const html = await render(BaseToggleGroup, {
         label: 'Image tools',
         actions: [
@@ -25,16 +25,18 @@ test('toggle group renders labeled main actions and split radio submenus', async
                 ],
             },
             { id: 'rotate', label: 'Rotate', icon: 'bi-arrow-clockwise' },
+            { id: 'grid', label: 'Grid', icon: 'bi-grid', active: true },
         ],
     });
 
     assert.match(html, /role="group" aria-label="Image tools"/);
-    assert.match(html, /aria-label="Crop"[^>]*aria-pressed="true"/);
-    assert.match(html, /aria-label="Rotate"/);
-    assert.doesNotMatch(html, /aria-label="Rotate"[^>]*aria-pressed/);
-    assert.match(html, /aria-label="Crop: Rectangle crop" title="Crop options"[^>]*aria-expanded="false"/);
+    assert.match(html, /aria-label="Crop: Rectangle crop" title="Crop: Rectangle crop"[^>]*aria-expanded="false"/);
+    assert.doesNotMatch(html, /aria-label="Crop"/);
     assert.match(html, /aria-label="Rotate" title="Rotate"/);
-    assert.match(html, /class="bi bi-crop"/);
+    assert.doesNotMatch(html, /aria-label="Rotate"[^>]*aria-pressed/);
+    assert.match(html, /aria-label="Grid"[^>]*aria-pressed="true"/);
+    assert.equal((html.match(/class="bi bi-crop"/g) ?? []).length, 1);
+    assert.doesNotMatch(html, /bi-chevron/);
     assert.equal((html.match(/<button\b/g) ?? []).length, 3);
     assert.doesNotMatch(html, /role="radiogroup"/);
 });
@@ -54,7 +56,7 @@ test('toggle group labels and icons are rendered as text and classes, not HTML',
     assert.doesNotMatch(html, /<img\b|data-injected="yes"/);
 });
 
-test('toggle group honors custom action and split-trigger titles with label fallbacks', async () => {
+test('toggle group honors custom fold-out trigger titles with label fallbacks', async () => {
     const html = await render(BaseToggleGroup, {
         label: 'Image tools',
         actions: [{
@@ -69,8 +71,13 @@ test('toggle group honors custom action and split-trigger titles with label fall
         }],
     });
 
-    assert.match(html, /aria-label="Crop" title="Crop the image"/);
-    assert.match(html, /aria-label="Crop: None" title="Crop options"/);
+    assert.match(html, /aria-label="Crop: None" title="Crop the image"/);
+
+    const fallback = await render(BaseToggleGroup, {
+        label: 'Image tools',
+        actions: [{ id: 'crop', label: 'Crop', icon: 'bi-crop', subActions: [{ id: 'rectangle', label: 'Rectangle', icon: 'bi-crop' }] }],
+    });
+    assert.match(fallback, /aria-label="Crop: None" title="Crop: None"/);
 });
 
 test('parent and subaction disabled states affect only their intended controls', async () => {
@@ -84,7 +91,7 @@ test('parent and subaction disabled states affect only their intended controls',
             subActions: [{ id: 'rectangle', label: 'Rectangle', icon: 'bi-crop' }],
         }],
     });
-    assert.equal((parentDisabled.match(/ disabled/g) ?? []).length, 2);
+    assert.match(parentDisabled, /aria-label="Crop: None"[^>]*disabled/);
 
     const allOptionsDisabled = await render(BaseToggleGroup, {
         label: 'Tools',
@@ -95,7 +102,6 @@ test('parent and subaction disabled states affect only their intended controls',
             subActions: [{ id: 'rectangle', label: 'Rectangle', icon: 'bi-crop', disabled: true }],
         }],
     });
-    assert.match(allOptionsDisabled, /aria-label="Crop"/);
     assert.match(allOptionsDisabled, /aria-label="Crop: None"[^>]*disabled/);
 });
 
