@@ -103,6 +103,12 @@
         border-radius: 4px;
     }
 
+    .toggle-group :deep(.tool-button .bi),
+    .toggle-group :deep(.menu-select__trigger .bi) {
+        position: relative;
+        top: 1px;
+    }
+
     .toggle-group .toggle-group__button:hover:not(:disabled),
     .toggle-group :deep(.menu-select__trigger:hover:not(:disabled)),
     .toggle-group :deep(.menu-select__trigger[aria-expanded='true']) {
