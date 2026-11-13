@@ -40,11 +40,7 @@
 
 <template>
     <div class="toggle-group" role="group" :aria-label="label">
-        <div
-            v-for="({ action, options, subActionsById, selectedValue }) in actionOptions"
-            :key="action.id"
-            class="toggle-group__action"
-        >
+        <template v-for="({ action, options, subActionsById, selectedValue }) in actionOptions" :key="action.id">
             <BaseIconButton
                 :label="action.label"
                 :title="action.title"
@@ -82,7 +78,7 @@
                     {{ option.label }}
                 </template>
             </BaseMenuSelect>
-        </div>
+        </template>
     </div>
 </template>
 
@@ -94,29 +90,8 @@
         gap: 4px;
     }
 
-    .toggle-group__action {
-        display: inline-flex;
-        align-items: stretch;
-        overflow: hidden;
-        border-radius: var(--radius-button);
-    }
-
-    .toggle-group__action :deep(.base-button) {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
     .toggle-group__submenu :deep(.menu-select__trigger) {
-        width: 22px;
-        height: 36px;
         padding: 0 3px;
-        color: var(--color-text);
-        background-color: var(--color-hover);
-        border-radius: 0 var(--radius-button) var(--radius-button) 0;
-    }
-
-    .toggle-group__submenu :deep(.menu-select__trigger:hover:not(:disabled)) {
-        background-color: var(--color-active);
     }
 
     .toggle-group__chevron {
