@@ -34,6 +34,7 @@ A collection of Vue 3 components designed specifically for Chrome extensions.
 
 - **[BaseAlert](/components/base-alert)** - Error, warning and info messages
 - **[BaseLoadingBar](/components/base-loading-bar)** - Indeterminate progress bar
+- **[BaseSpinner](/components/base-spinner)** - Circular loading indicator with three sizes
 
 ## Usage
 

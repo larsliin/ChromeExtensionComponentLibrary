@@ -33,6 +33,7 @@ export default defineConfig({
           { text: 'BaseProductIcon', link: '/components/base-product-icon' },
           { text: 'BaseRangeInput', link: '/components/base-range-input' },
           { text: 'BaseSelect', link: '/components/base-select' },
+          { text: 'BaseSpinner', link: '/components/base-spinner' },
           { text: 'BaseSwitch', link: '/components/base-switch' },
           { text: 'BaseToggleGroup', link: '/components/base-toggle-group' },
         ],
