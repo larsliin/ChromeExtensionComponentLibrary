@@ -102,7 +102,7 @@ test('declining version creation leaves the repository unchanged', async (t) => 
     assert.equal(git('status', '--porcelain'), '');
 });
 
-test('release prepares matching version files and reminds the user to commit, tag and push manually', async (t) => {
+test('release prepares matching version files and reminds the user to commit and push without manual tags', async (t) => {
     const { repo, git, initialCommit } = fixture(t);
     const result = await release(repo, ['yes']);
     assert.equal(result.code, 0, result.output);
@@ -118,9 +118,10 @@ test('release prepares matching version files and reminds the user to commit, ta
     assert.equal(git('ls-remote', '--tags', 'origin'), '');
     assert.match(result.output, /Please review and commit the version files/);
     const commit = result.output.indexOf('git commit -m "chore(release): 0.1.1"');
-    const tag = result.output.indexOf('git tag -a v0.1.1 -m "Release v0.1.1"');
-    const push = result.output.indexOf('git push --atomic origin HEAD:refs/heads/main refs/tags/v0.1.1');
-    assert.ok(commit >= 0 && tag > commit && push > tag, result.output);
+    const push = result.output.indexOf('git push origin main');
+    assert.ok(commit >= 0 && push > commit, result.output);
+    assert.doesNotMatch(result.output, /git tag|refs\/tags\//);
+    assert.match(result.output, /GitHub Actions creates tag v0\.1\.1/);
 });
 
 test('minor releases also remain uncommitted and print the correct version-specific instructions', async (t) => {
@@ -132,6 +133,6 @@ test('minor releases also remain uncommitted and print the correct version-speci
     assert.equal(git('tag', '--list'), '');
     assert.match(git('ls-remote', 'origin', 'refs/heads/main'), new RegExp(initialCommit));
     assert.equal(git('ls-remote', '--tags', 'origin'), '');
-    assert.match(result.output, /git tag -a v0\.2\.0/);
+    assert.match(result.output, /GitHub Actions creates tag v0\.2\.0/);
     assert.match(result.output, /releases\/download\/v0\.2\.0\/chrome-extension-component-library-0\.2\.0\.tgz/);
 });

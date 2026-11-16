@@ -90,13 +90,12 @@ async function release() {
 
     console.log(
         '\nVersion files prepared. Nothing was committed, tagged, or pushed.\n'
-        + 'Please review and commit the version files, then create the tag and push them yourself:\n'
+        + 'Please review and commit the version files, then push them yourself:\n'
         + 'git add package.json package-lock.json\n'
         + `git commit -m "chore(release): ${nextVersion}"\n`
-        + `git tag -a ${tag} -m "Release ${tag}"\n`
-        + `git push --atomic origin HEAD:refs/heads/main refs/tags/${tag}\n`
-        + '\nCreate the tag only after committing, so it points to the version commit.\n'
-        + 'Pushing the tag triggers GitHub Actions. Do not rerun this script just to publish the prepared version.',
+        + 'git push origin main\n'
+        + `\nGitHub Actions creates tag ${tag} at your pushed version commit and publishes the package.\n`
+        + 'No manual tag command is needed. Do not rerun this script just to publish the prepared version.',
     );
     console.log(
         '\nAfter the GitHub Release workflow succeeds, run this in a consuming project:\n'

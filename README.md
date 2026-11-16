@@ -103,25 +103,25 @@ generated `.tgz` files out of Git.
    `npm test`. Type **`yes`** when asked to prepare the version files.
    It updates `package.json` and `package-lock.json` only. It does not stage,
    commit, create a tag, or push.
-4. The script reminds you to review, commit, tag, and push manually, and prints
+4. The script reminds you to review, commit, and push manually, and prints
    the exact commands for the prepared version. For example, after preparing
    `0.1.1`, run these yourself:
 
    ```bash
    git add package.json package-lock.json
    git commit -m "chore(release): 0.1.1"
-   git tag -a v0.1.1 -m "Release v0.1.1"
-   git push --atomic origin HEAD:refs/heads/main refs/tags/v0.1.1
+   git push origin main
    ```
 
-   Create the tag **after committing** so it points to the commit containing the
-   new version. Pushing that tag triggers the release workflow. The `.tgz` is
-   built by GitHub Actions, not committed to Git. Do not rerun the release command
-   just to publish a prepared version: that would start another version bump.
-5. The `Release package` workflow checks that the tag matches the package version,
-   installs dependencies, builds and tests the library, then runs `npm pack` and
-   attaches the archive to a GitHub Release. It uses the workflow's `GITHUB_TOKEN`;
-   no npm registry account or publishing token is needed.
+   A normal push (including VS Code Sync/Push) to `main` triggers the release
+   workflow. **You do not create or push a tag yourself.** Do not rerun the release
+   command just to publish a prepared version: that would start another version bump.
+5. The `Release package` workflow reads the package version. If that version is
+   already published with its archive, it skips publishing. Otherwise, it installs
+   dependencies, builds and tests the library, runs `npm pack`, and creates the
+   matching tag at the pushed commit and a GitHub Release containing the archive.
+   The `.tgz` is not committed to Git. The workflow uses `GITHUB_TOKEN`; no npm
+   registry account or publishing token is needed.
 6. Wait for the workflow to succeed on the repository's Actions page. The script
    prints the version-specific `npm install` command to run in each consuming
    project, for example:
@@ -137,6 +137,12 @@ generated `.tgz` files out of Git.
 The script requires Git, npm, and access to the `origin` remote. Publishing needs
 write access. If a command fails, it reports the error and stops; inspect
 `git status` before retrying, especially if version creation already started.
+
+Existing manual version-tag pushes are still supported, but their tag must match
+the package version. If an unpublished tag already points to a different commit
+or an existing release is incomplete, the workflow stops rather than replacing
+anything. Inspect the failed run and rerun it at the original commit when
+appropriate, or prepare a new version.
 
 Always use an explicit version URL, not a `latest` URL. Never replace an existing
 release archive or move its tag: a changed build must get a new version so that
