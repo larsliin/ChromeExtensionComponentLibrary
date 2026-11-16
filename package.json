@@ -1,6 +1,6 @@
 {
   "name": "chrome-extension-component-library",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -42,10 +42,18 @@
     "vue": "^3.5.0"
   },
   "peerDependenciesMeta": {
-    "@codemirror/language": { "optional": true },
-    "@codemirror/state": { "optional": true },
-    "@codemirror/theme-one-dark": { "optional": true },
-    "@codemirror/view": { "optional": true }
+    "@codemirror/language": {
+      "optional": true
+    },
+    "@codemirror/state": {
+      "optional": true
+    },
+    "@codemirror/theme-one-dark": {
+      "optional": true
+    },
+    "@codemirror/view": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "bootstrap-icons": "^1.13.2",
