@@ -82,21 +82,51 @@ The CodeMirror editor is available separately from `chrome-extension-component-l
 Use Node.js 24 and npm to develop and release the library. Keep `dist/` and
 generated `.tgz` files out of Git.
 
-1. Install dependencies with `npm ci`, make changes, and run `npm test`.
-2. Update the version in `package.json` and `package-lock.json` together:
+1. Install dependencies with `npm ci`. Finish and commit your library changes,
+   switch to `main`, and sync it with GitHub. The working tree must be clean.
+2. Run the release command:
 
    ```bash
-   npm version 0.1.1 --no-git-tag-version
+   npm run release -- patch
    ```
 
-3. After reviewing and committing the changes, push the commit and a matching
-   version tag (for example `v0.1.1`) to GitHub.
-4. The `Release package` workflow checks that the tag matches the package version,
+   | Command | Example starting at `0.1.0` | Use for |
+   | --- | --- | --- |
+   | `npm run release -- patch` | `0.1.1` | Fixes and small compatible changes |
+   | `npm run release -- minor` | `0.2.0` | New features; breaking changes while pre-1.0 |
+   | `npm run release -- major` | `1.0.0` | First stable release; breaking changes after 1.0 |
+
+   Running `npm run release` without an argument defaults to `patch`.
+   Use `npm run release -- --help` to display usage.
+3. The script fetches `origin/main` and tags, refuses an outdated branch or an
+   existing target tag, calculates the next version from `package.json`, and runs
+   `npm test`. Type **`yes`** when asked to create the version commit and tag.
+   It updates both version files, commits them, and creates a matching annotated
+   tag automatically. It never moves or overwrites an old tag.
+4. The script then asks separately whether to push. Type **`yes`** to push the
+   commit and new tag together to `origin` and trigger the release workflow.
+   Any other answer leaves them local and prints the exact command to publish
+   later. Do not rerun the release command just to push a locally created release:
+   that would start another version bump.
+5. The `Release package` workflow checks that the tag matches the package version,
    installs dependencies, builds and tests the library, then runs `npm pack` and
    attaches the archive to a GitHub Release. It uses the workflow's `GITHUB_TOKEN`;
    no npm registry account or publishing token is needed.
-5. After the release succeeds, update each consumer by running `npm install` with
-   the new version's release archive URL, then commit its manifest and lockfile.
+6. Wait for the workflow to succeed on the repository's Actions page. The script
+   prints the version-specific `npm install` command to run in each consuming
+   project, for example:
+
+   ```bash
+   npm install https://github.com/larsliin/ChromeExtensionComponentLibrary/releases/download/v0.1.1/chrome-extension-component-library-0.1.1.tgz
+   npm run build:extension
+   ```
+
+   Commit the consumer's updated `package.json` and `package-lock.json`. On other
+   devices, sync that project and run `npm install` as usual.
+
+The script requires Git, npm, and access to the `origin` remote. Publishing needs
+write access. If a command fails, it reports the error and stops; inspect
+`git status` before retrying, especially if version creation already started.
 
 Always use an explicit version URL, not a `latest` URL. Never replace an existing
 release archive or move its tag: a changed build must get a new version so that
