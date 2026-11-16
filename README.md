@@ -100,14 +100,24 @@ generated `.tgz` files out of Git.
    Use `npm run release -- --help` to display usage.
 3. The script fetches `origin/main` and tags, refuses an outdated branch or an
    existing target tag, calculates the next version from `package.json`, and runs
-   `npm test`. Type **`yes`** when asked to create the version commit and tag.
-   It updates both version files, commits them, and creates a matching annotated
-   tag automatically. It never moves or overwrites an old tag.
-4. The script then asks separately whether to push. Type **`yes`** to push the
-   commit and new tag together to `origin` and trigger the release workflow.
-   Any other answer leaves them local and prints the exact command to publish
-   later. Do not rerun the release command just to push a locally created release:
-   that would start another version bump.
+   `npm test`. Type **`yes`** when asked to prepare the version files.
+   It updates `package.json` and `package-lock.json` only. It does not stage,
+   commit, create a tag, or push.
+4. The script reminds you to review, commit, tag, and push manually, and prints
+   the exact commands for the prepared version. For example, after preparing
+   `0.1.1`, run these yourself:
+
+   ```bash
+   git add package.json package-lock.json
+   git commit -m "chore(release): 0.1.1"
+   git tag -a v0.1.1 -m "Release v0.1.1"
+   git push --atomic origin HEAD:refs/heads/main refs/tags/v0.1.1
+   ```
+
+   Create the tag **after committing** so it points to the commit containing the
+   new version. Pushing that tag triggers the release workflow. The `.tgz` is
+   built by GitHub Actions, not committed to Git. Do not rerun the release command
+   just to publish a prepared version: that would start another version bump.
 5. The `Release package` workflow checks that the tag matches the package version,
    installs dependencies, builds and tests the library, then runs `npm pack` and
    attaches the archive to a GitHub Release. It uses the workflow's `GITHUB_TOKEN`;

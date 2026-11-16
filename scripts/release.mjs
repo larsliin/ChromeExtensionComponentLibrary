@@ -57,8 +57,6 @@ async function release() {
     if (git('branch', '--show-current') !== 'main') {
         throw new Error('Release from the main branch, not a feature branch or detached HEAD.');
     }
-    git('var', 'GIT_AUTHOR_IDENT');
-    git('var', 'GIT_COMMITTER_IDENT');
     run('git', ['fetch', 'origin', 'refs/heads/main:refs/remotes/origin/main', '--tags']);
     if (Number(git('rev-list', '--count', 'HEAD..refs/remotes/origin/main')) > 0) {
         throw new Error('Local main is behind or diverged from origin/main. Sync it before releasing.');
@@ -84,24 +82,22 @@ async function release() {
     console.log(`Release ${version} -> ${nextVersion} (${bump})`);
     npm('test');
     requireCleanTree();
-    if (!await confirm(`Create version commit and tag ${tag}?`)) {
-        console.log('Release cancelled. No version commit or tag was created.');
+    if (!await confirm(`Prepare version files for ${tag}?`)) {
+        console.log('Release cancelled. No version files were changed.');
         return;
     }
-    npm(
-        'version', nextVersion,
-        '--git-tag-version',
-        '--tag-version-prefix=v',
-        '--message=chore(release): %s\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>',
-    );
+    npm('version', nextVersion, '--no-git-tag-version');
 
-    const pushArgs = ['push', '--atomic', 'origin', 'HEAD:refs/heads/main', `refs/tags/${tag}`];
-    if (await confirm(`Push commit and tag ${tag} to origin to publish the GitHub Release?`)) {
-        run('git', pushArgs);
-        console.log('Pushed. GitHub Actions will build, test, and publish the package.');
-    } else {
-        console.log(`Release kept locally. To publish it later:\ngit ${pushArgs.join(' ')}`);
-    }
+    console.log(
+        '\nVersion files prepared. Nothing was committed, tagged, or pushed.\n'
+        + 'Please review and commit the version files, then create the tag and push them yourself:\n'
+        + 'git add package.json package-lock.json\n'
+        + `git commit -m "chore(release): ${nextVersion}"\n`
+        + `git tag -a ${tag} -m "Release ${tag}"\n`
+        + `git push --atomic origin HEAD:refs/heads/main refs/tags/${tag}\n`
+        + '\nCreate the tag only after committing, so it points to the version commit.\n'
+        + 'Pushing the tag triggers GitHub Actions. Do not rerun this script just to publish the prepared version.',
+    );
     console.log(
         '\nAfter the GitHub Release workflow succeeds, run this in a consuming project:\n'
         + `npm install https://github.com/larsliin/ChromeExtensionComponentLibrary/releases/download/${tag}/chrome-extension-component-library-${nextVersion}.tgz`,

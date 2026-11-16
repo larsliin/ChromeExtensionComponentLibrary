@@ -50,13 +50,12 @@ async function release(repo, answers = [], bump = 'patch') {
         stdio: ['pipe', 'pipe', 'pipe'],
     });
     let output = '';
-    let prompt = 0;
-    const prompts = ['Create version commit and tag', 'Push commit and tag'];
+    let answered = false;
     const collect = (chunk) => {
         output += chunk.toString();
-        if (prompt < answers.length && output.includes(prompts[prompt])) {
-            child.stdin.write(`${answers[prompt]}\n`);
-            prompt++;
+        if (!answered && answers.length > 0 && output.includes('Prepare version files')) {
+            child.stdin.write(`${answers[0]}\n`);
+            answered = true;
         }
     };
     child.stdout.on('data', collect);
@@ -103,29 +102,36 @@ test('declining version creation leaves the repository unchanged', async (t) => 
     assert.equal(git('status', '--porcelain'), '');
 });
 
-test('release creates matching version files, commit and annotated tag but does not push without yes', async (t) => {
+test('release prepares matching version files and reminds the user to commit, tag and push manually', async (t) => {
     const { repo, git, initialCommit } = fixture(t);
-    const result = await release(repo, ['yes', 'no']);
+    const result = await release(repo, ['yes']);
     assert.equal(result.code, 0, result.output);
     assert.equal(JSON.parse(readFileSync(join(repo, 'package.json'))).version, '0.1.1');
     const lock = JSON.parse(readFileSync(join(repo, 'package-lock.json')));
     assert.equal(lock.version, '0.1.1');
     assert.equal(lock.packages[''].version, '0.1.1');
-    assert.equal(git('cat-file', '-t', 'v0.1.1'), 'tag');
-    assert.equal(git('rev-parse', 'v0.1.1^{}'), git('rev-parse', 'HEAD'));
-    assert.match(git('log', '-1', '--format=%B'), /Co-authored-by: Copilot/);
-    assert.equal(git('status', '--porcelain'), '');
+    assert.equal(git('rev-parse', 'HEAD'), initialCommit);
+    assert.equal(git('tag', '--list'), '');
+    assert.equal(git('diff', '--cached', '--name-only'), '');
+    assert.deepEqual(git('diff', '--name-only').split('\n').sort(), ['package-lock.json', 'package.json']);
     assert.match(git('ls-remote', 'origin', 'refs/heads/main'), new RegExp(initialCommit));
     assert.equal(git('ls-remote', '--tags', 'origin'), '');
+    assert.match(result.output, /Please review and commit the version files/);
+    const commit = result.output.indexOf('git commit -m "chore(release): 0.1.1"');
+    const tag = result.output.indexOf('git tag -a v0.1.1 -m "Release v0.1.1"');
+    const push = result.output.indexOf('git push --atomic origin HEAD:refs/heads/main refs/tags/v0.1.1');
+    assert.ok(commit >= 0 && tag > commit && push > tag, result.output);
 });
 
-test('explicit push confirmation publishes the matching commit and tag to origin', async (t) => {
-    const { repo, git } = fixture(t);
-    const result = await release(repo, ['yes', 'yes'], 'minor');
+test('minor releases also remain uncommitted and print the correct version-specific instructions', async (t) => {
+    const { repo, git, initialCommit } = fixture(t);
+    const result = await release(repo, ['yes'], 'minor');
     assert.equal(result.code, 0, result.output);
     assert.equal(JSON.parse(readFileSync(join(repo, 'package.json'))).version, '0.2.0');
-    const head = git('rev-parse', 'HEAD');
-    assert.match(git('ls-remote', 'origin', 'refs/heads/main'), new RegExp(head));
-    assert.match(git('ls-remote', 'origin', 'refs/tags/v0.2.0^{}'), new RegExp(head));
+    assert.equal(git('rev-parse', 'HEAD'), initialCommit);
+    assert.equal(git('tag', '--list'), '');
+    assert.match(git('ls-remote', 'origin', 'refs/heads/main'), new RegExp(initialCommit));
+    assert.equal(git('ls-remote', '--tags', 'origin'), '');
+    assert.match(result.output, /git tag -a v0\.2\.0/);
     assert.match(result.output, /releases\/download\/v0\.2\.0\/chrome-extension-component-library-0\.2\.0\.tgz/);
 });
