@@ -43,35 +43,21 @@ All icons use the locally bundled `bootstrap-icons` package. See the [icon setup
 - Shared CSS design tokens, with dark and light themes
 - Small dependency footprint; CodeMirror remains optional
 
-## Build and install from GitHub
-
-### In the component library repository
-
-1. Install the development dependencies. The `prepare` script also builds the package:
-
-   ```bash
-   npm install
-   ```
-
-2. After making component changes, run the package build to type-check and verify the output:
-
-   ```bash
-   npm run build
-   ```
-
-   This creates the distributable files in `dist/`. Keep `dist/` out of Git; Git-based installs rebuild it from source.
-3. Commit and push the package source, build configuration, and `prepare` script to the branch you plan to install, for example `main`.
+## Install from a GitHub Release
 
 ### In the consuming project
 
-1. Make sure the GitHub repository is public or that the installing user has access.
-2. From the consuming Vue 3 project's directory, install the library and Vue:
+1. From the consuming Vue 3 project's directory, install the versioned package and Vue:
 
    ```bash
-   npm install github:larsliin/ChromeExtensionsComponentLibrary#main vue
+   npm install https://github.com/larsliin/ChromeExtensionComponentLibrary/releases/download/v0.1.0/chrome-extension-component-library-0.1.0.tgz vue
    ```
 
-   npm fetches the pushed repository and runs its `prepare` script, which builds `dist/` for the installed package. No tarball or committed build output is needed.
+   npm downloads the prebuilt JavaScript, CSS, and TypeScript declarations. No
+   GitHub login, library checkout, or library build is required for public releases.
+2. Commit both `package.json` and `package-lock.json`. On another device, run
+   `npm install` after cloning the consuming project, or `npm ci` for an exact
+   lockfile install. No sibling `packages/` directory is needed.
 3. Import the stylesheet once in the app entry point and import components where needed:
 
    ```ts
@@ -89,7 +75,33 @@ All icons use the locally bundled `bootstrap-icons` package. See the [icon setup
    </template>
    ```
 
-The CodeMirror editor is available separately from `chrome-extension-component-library/code-editor`. Install its peer dependencies only if you use it. After publishing to npm, projects can instead install it with `npm install chrome-extension-component-library vue`.
+The CodeMirror editor is available separately from `chrome-extension-component-library/code-editor`. Install its peer dependencies only if you use it.
+
+### Publishing a new version
+
+Use Node.js 24 and npm to develop and release the library. Keep `dist/` and
+generated `.tgz` files out of Git.
+
+1. Install dependencies with `npm ci`, make changes, and run `npm test`.
+2. Update the version in `package.json` and `package-lock.json` together:
+
+   ```bash
+   npm version 0.1.1 --no-git-tag-version
+   ```
+
+3. After reviewing and committing the changes, push the commit and a matching
+   version tag (for example `v0.1.1`) to GitHub.
+4. The `Release package` workflow checks that the tag matches the package version,
+   installs dependencies, builds and tests the library, then runs `npm pack` and
+   attaches the archive to a GitHub Release. It uses the workflow's `GITHUB_TOKEN`;
+   no npm registry account or publishing token is needed.
+5. After the release succeeds, update each consumer by running `npm install` with
+   the new version's release archive URL, then commit its manifest and lockfile.
+
+Always use an explicit version URL, not a `latest` URL. Never replace an existing
+release archive or move its tag: a changed build must get a new version so that
+lockfile integrity checks and installs remain reproducible. Release archives are
+assets produced by `npm pack`, not GitHub's automatic source-code archives.
 
 ## Development
 
@@ -113,7 +125,7 @@ npm run docs:dev
 
 ## Other build commands
 
-To create an optional local tarball (not required for GitHub installs):
+To create a local tarball for testing (not required for release-based installs):
 
 ```bash
 npm pack
