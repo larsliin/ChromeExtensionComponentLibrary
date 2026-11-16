@@ -7,9 +7,11 @@ import BaseSpinner from '../../src/components/BaseSpinner.vue'
 Circular indeterminate loading indicator for inline or standalone feedback. Inherits the dark (default) or light theme through shared design tokens.
 
 <ComponentPreview>
+  <BaseSpinner size="extra-small" label="Loading status" />
   <BaseSpinner size="small" label="Loading items" />
   <BaseSpinner label="Loading settings" />
   <BaseSpinner size="large" label="Loading preview" />
+  <BaseSpinner size="extra-large" label="Loading image" />
 </ComponentPreview>
 
 ```vue
@@ -28,10 +30,22 @@ Use `v-if="isLoading"` to show the spinner only while work is in progress.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Outer width and height: 16px, 24px, or 32px |
+| `size` | `'extra-small' \| 'small' \| 'medium' \| 'large' \| 'extra-large'` | `'medium'` | Size preset; dimensions and stroke widths are listed below |
 | `label` | `string` | `'Loading'` | Accessible name of the indeterminate progress indicator |
 
-The ring thickness scales with the size: 2px for small, 3px for medium, and 4px for large.
+## Sizes
+
+| Size | Outer width and height | Ring thickness |
+|------|------------------------|----------------|
+| `extra-small` | 12px | 2px |
+| `small` | 16px | 2px |
+| `medium` | 24px | 3px |
+| `large` | 32px | 4px |
+| `extra-large` | 36px | 5px |
+
+Use `extra-small` for compact inline feedback and `extra-large` for prominent loading indicators, such as image previews.
+
+## Accessibility
 
 The spinner uses `role="progressbar"` without a numeric value. Set a descriptive `label` for the operation being performed. Native attributes, classes, and styles fall through to the outer element.
 

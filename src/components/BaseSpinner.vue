@@ -1,6 +1,6 @@
 <script setup lang="ts">
     withDefaults(defineProps<{
-        size?: 'small' | 'medium' | 'large';
+        size?: 'extra-small' | 'small' | 'medium' | 'large' | 'extra-large';
         label?: string;
     }>(), {
         size: 'medium',
@@ -26,6 +26,13 @@
         vertical-align: middle;
     }
 
+    .spinner--extra-small {
+        --spinner-stroke-width: 2px;
+
+        width: 12px;
+        height: 12px;
+    }
+
     .spinner--small {
         --spinner-stroke-width: 2px;
 
@@ -45,6 +52,13 @@
 
         width: 32px;
         height: 32px;
+    }
+
+    .spinner--extra-large {
+        --spinner-stroke-width: 5px;
+
+        width: 36px;
+        height: 36px;
     }
 
     .spinner__indicator {

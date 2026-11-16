@@ -21,7 +21,7 @@ test('spinners default to medium with an accessible indeterminate loading state'
 });
 
 test('spinners support each size and preserve custom labels and native attributes', async () => {
-    for (const size of ['small', 'medium', 'large']) {
+    for (const size of ['extra-small', 'small', 'medium', 'large', 'extra-large']) {
         const html = await render({
             size,
             label: 'Loading settings',
