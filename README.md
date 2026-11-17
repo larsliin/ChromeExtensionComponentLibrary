@@ -6,10 +6,10 @@ A collection of reusable Vue 3 components for building accessible interfaces in 
 
 ### Actions
 
-- **BaseButton** - Button with primary, secondary, tool, and bare variants
-- **BaseCopyButton** - Clipboard button with temporary success feedback and stable width
-- **BaseIconButton** - Accessible icon-only button with toolbar, primary, and filled secondary variants
-- **BaseHeroButton** - Large glossy call-to-action with custom slot content
+- **[BaseButton](docs/components/base-button.md)** - Button with primary, secondary, tool, and bare variants
+- **[BaseCopyButton](docs/components/base-copy-button.md)** - Clipboard button with temporary success feedback and stable width
+- **[BaseIconButton](docs/components/base-icon-button.md)** - Accessible icon-only button with toolbar, primary, and filled secondary variants
+- **[BaseHeroButton](docs/components/base-hero-button.md)** - Large glossy call-to-action with custom slot content
 
 ### Lists
 
@@ -17,18 +17,18 @@ A collection of reusable Vue 3 components for building accessible interfaces in 
 
 ### Form fields
 
-- **BaseSelect** - Native select field
-- **BaseMenuSelect** - Compact custom dropdown
-- **BaseCheckbox** - Checkbox with optional label
+- **[BaseSelect](docs/components/base-select.md)** - Native select field
+- **[BaseMenuSelect](docs/components/base-menu-select.md)** - Compact custom dropdown
+- **[BaseCheckbox](docs/components/base-checkbox.md)** - Checkbox with optional label
 - **[BaseSwitch](docs/components/base-switch.md)** - Compact labeled on/off control
-- **BaseNumberInput** - Number field
-- **BaseRangeInput** - Range slider
-- **BaseCodeEditor** - CodeMirror editor; CodeMirror is an optional peer dependency
+- **[BaseNumberInput](docs/components/base-number-input.md)** - Number field
+- **[BaseRangeInput](docs/components/base-range-input.md)** - Range slider
+- **[BaseCodeEditor](docs/components/base-code-editor.md)** - CodeMirror editor; CodeMirror is an optional peer dependency
 
 ### Feedback
 
-- **BaseAlert** - Error, warning, and information messages
-- **BaseLoadingBar** - Indeterminate progress indicator
+- **[BaseAlert](docs/components/base-alert.md)** - Error, warning, and information messages
+- **[BaseLoadingBar](docs/components/base-loading-bar.md)** - Indeterminate progress indicator
 
 See the [component documentation](docs/components/index.md) for the component overview, examples, and API details.
 
