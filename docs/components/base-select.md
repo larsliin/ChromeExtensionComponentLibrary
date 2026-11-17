@@ -13,7 +13,7 @@ const mode = ref('analogic')
 
 # BaseSelect
 
-Form-field dropdown built on the native `<select>`, so keyboard, screen-reader and mobile behavior come from the browser. Browsers that support customizable selects get a styled picker; others keep their native picker. Use [BaseMenuSelect](/components/base-menu-select) instead for a compact icon trigger with a custom panel.
+Form-field dropdown built on the native `<select>`, so keyboard, screen-reader and mobile behavior come from the browser. Use [BaseMenuSelect](/components/base-menu-select) instead for a compact icon trigger with a custom panel.
 
 Both share the same `options` + `v-model` API.
 
@@ -52,4 +52,4 @@ Attributes (`id`, `disabled`, `aria-label`, ...) are forwarded to the `<select>`
 
 ## Tokens used
 
-`--color-text`, `--color-text-muted`, `--color-editor-bg`, `--color-panel`, `--color-border`, `--color-hover`, `--color-active`, `--color-focus`, `--radius-button`, `--shadow-floating-panel`, `--font-family-base`.
+`--color-text`, `--color-text-muted`, `--color-editor-bg`, `--color-border`, `--color-focus`, `--radius-button`, `--font-family-base`.
