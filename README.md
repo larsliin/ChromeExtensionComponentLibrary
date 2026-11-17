@@ -79,70 +79,48 @@ The CodeMirror editor is available separately from `chrome-extension-component-l
 
 ### Publishing a new version
 
-Use Node.js 24 and npm to develop and release the library. Keep `dist/` and
-generated `.tgz` files out of Git.
+Packages are created **manually in GitHub Actions**, never on a normal push or tag
+push. No local version-bump command or manual tag is needed.
 
-1. Install dependencies with `npm ci`. Finish and commit your library changes,
-   switch to `main`, and sync it with GitHub. The working tree must be clean.
-2. Run the release command:
+1. Finish your library changes, commit them, and push to `main` as usual.
+2. Open [Actions > Create package](https://github.com/larsliin/ChromeExtensionComponentLibrary/actions/workflows/release.yml).
+3. Open GitHub's **Run workflow** dropdown, keep the branch set to **main**, and
+   select a version increment:
 
-   ```bash
-   npm run release -- patch
-   ```
-
-   | Command | Example starting at `0.1.0` | Use for |
+   | Increment | Example starting at `0.1.3` | Use for |
    | --- | --- | --- |
-   | `npm run release -- patch` | `0.1.1` | Fixes and small compatible changes |
-   | `npm run release -- minor` | `0.2.0` | New features; breaking changes while pre-1.0 |
-   | `npm run release -- major` | `1.0.0` | First stable release; breaking changes after 1.0 |
+   | `patch` (default) | `0.1.4` | Fixes and small compatible changes |
+   | `minor` | `0.2.0` | New features; breaking changes while pre-1.0 |
+   | `major` | `1.0.0` | First stable release; breaking changes after 1.0 |
 
-   Running `npm run release` without an argument defaults to `patch`.
-   Use `npm run release -- --help` to display usage.
-3. The script fetches `origin/main` and tags, refuses an outdated branch or an
-   existing target tag, calculates the next version from `package.json`, and runs
-   `npm test`. Type **`yes`** when asked to prepare the version files.
-   It updates `package.json` and `package-lock.json` only. It does not stage,
-   commit, create a tag, or push.
-4. The script reminds you to review, commit, and push manually, and prints
-   the exact commands for the prepared version. For example, after preparing
-   `0.1.1`, run these yourself:
+4. Click **Run workflow**. GitHub controls this button's label; the workflow is
+   named **Create package**.
+5. Open the run. **Determine package version** logs the exact version and baseline.
+   The workflow installs dependencies, sets the generated package's version, runs
+   the build and tests, packs the `.tgz`, and publishes a matching release and tag.
+6. When the run succeeds, its **Summary** shows the published package version,
+   release link, and exact `npm install` command. Run that command in each consumer,
+   then run `npm run build:extension` and commit its updated `package.json` and
+   `package-lock.json`. Other devices only need to sync and run `npm install`.
 
-   ```bash
-   git add package.json package-lock.json
-   git commit -m "chore(release): 0.1.1"
-   git push origin main
-   ```
+The version baseline is the higher of the latest published release and the source
+`package.json` version. With no releases, the source version is used. Each manual
+run increments that baseline once. Runs are serialized, and existing tags or
+releases are never overwritten.
 
-   A normal push (including VS Code Sync/Push) to `main` triggers the release
-   workflow. **You do not create or push a tag yourself.** Do not rerun the release
-   command just to publish a prepared version: that would start another version bump.
-5. The `Release package` workflow reads the package version. If that version is
-   already published with its archive, it skips publishing. Otherwise, it installs
-   dependencies, builds and tests the library, runs `npm pack`, and creates the
-   matching tag at the pushed commit and a GitHub Release containing the archive.
-   The `.tgz` is not committed to Git. The workflow uses `GITHUB_TOKEN`; no npm
-   registry account or publishing token is needed.
-6. Wait for the workflow to succeed on the repository's Actions page. The script
-   prints the version-specific `npm install` command to run in each consuming
-   project, for example:
+**No automatic source commits:** version files are changed only in the temporary
+Actions checkout for packaging, not committed back to `main`. The release tag
+points to the source commit used to build the package; its source version files
+may therefore differ from the published archive's version. The GitHub Release,
+archive metadata, and run summary record the published version. This keeps all
+source commits under your control.
 
-   ```bash
-   npm install https://github.com/larsliin/ChromeExtensionComponentLibrary/releases/download/v0.1.1/chrome-extension-component-library-0.1.1.tgz
-   npm run build:extension
-   ```
-
-   Commit the consumer's updated `package.json` and `package-lock.json`. On other
-   devices, sync that project and run `npm install` as usual.
-
-The script requires Git, npm, and access to the `origin` remote. Publishing needs
-write access. If a command fails, it reports the error and stops; inspect
-`git status` before retrying, especially if version creation already started.
-
-Existing manual version-tag pushes are still supported, but their tag must match
-the package version. If an unpublished tag already points to a different commit
-or an existing release is incomplete, the workflow stops rather than replacing
-anything. Inspect the failed run and rerun it at the original commit when
-appropriate, or prepare a new version.
+Publishing requires repository write access and uses the workflow's
+`GITHUB_TOKEN`; no npm account or publishing token is needed. If a run fails,
+inspect its logs before retrying. A partially created release or reserved tag
+causes an explicit error rather than being silently replaced. Keep `dist/` and
+generated `.tgz` files out of Git. The previous `npm run release` command has been
+removed in favor of this single manual workflow.
 
 Always use an explicit version URL, not a `latest` URL. Never replace an existing
 release archive or move its tag: a changed build must get a new version so that

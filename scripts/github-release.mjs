@@ -9,39 +9,41 @@ async function find(request) {
     }
 }
 
-export async function getReleasePlan({ github, context, version }) {
-    if (!/^\d+\.\d+\.\d+$/.test(version)) {
-        throw new Error('Releases require a stable major.minor.patch version.');
+function versionParts(version) {
+    if (!/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(version)) {
+        throw new Error(`Expected a stable major.minor.patch version, received: ${version}`);
     }
-    const tag = `v${version}`;
-    if (context.ref.startsWith('refs/tags/') && context.ref !== `refs/tags/${tag}`) {
-        throw new Error('Release tag must match package.json version.');
+    const parts = version.split('.').map(Number);
+    if (!parts.every(Number.isSafeInteger)) {
+        throw new Error('Version exceeds the supported integer range.');
     }
-    const release = await find(() => github.rest.repos.getReleaseByTag({
-        ...context.repo,
-        tag,
-    }));
-    if (release) {
-        const archive = `chrome-extension-component-library-${version}.tgz`;
-        if (release.draft || !release.assets.some((asset) => asset.name === archive)) {
-            throw new Error(`Release ${tag} exists but is incomplete. Inspect it manually; it will not be overwritten.`);
-        }
-        return { tag, publish: false };
-    }
+    return parts;
+}
 
-    const ref = await find(() => github.rest.git.getRef({
-        ...context.repo,
-        ref: `tags/${tag}`,
-    }));
-    if (ref) {
-        let object = ref.object;
-        while (object.type === 'tag') {
-            const result = await github.rest.git.getTag({ ...context.repo, tag_sha: object.sha });
-            object = result.data.object;
-        }
-        if (object.type !== 'commit' || object.sha !== context.sha) {
-            throw new Error(`Tag ${tag} already points to a different commit. Rerun its original workflow or bump the version.`);
-        }
+export async function getReleasePlan({ github, context, version, bump }) {
+    if (context.ref !== 'refs/heads/main') {
+        throw new Error('Create packages from the main branch only.');
     }
-    return { tag, publish: true };
+    if (!['patch', 'minor', 'major'].includes(bump)) {
+        throw new Error('Select patch, minor, or major.');
+    }
+    const source = versionParts(version);
+    const latest = await find(() => github.rest.repos.getLatestRelease(context.repo));
+    const published = latest ? versionParts(latest.tag_name.replace(/^v/, '')) : source;
+    const difference = source.findIndex((part, index) => part !== published[index]);
+    const base = difference >= 0 && source[difference] > published[difference] ? source : published;
+    const baseVersion = base.join('.');
+    const next = [...base];
+    const index = { major: 0, minor: 1, patch: 2 }[bump];
+    next[index]++;
+    next.fill(0, index + 1);
+    const nextVersion = next.join('.');
+    versionParts(nextVersion);
+    const tag = `v${nextVersion}`;
+    const release = await find(() => github.rest.repos.getReleaseByTag({ ...context.repo, tag }));
+    const ref = await find(() => github.rest.git.getRef({ ...context.repo, ref: `tags/${tag}` }));
+    if (release || ref) {
+        throw new Error(`${tag} already exists. Inspect the existing tag/release; it will not be overwritten.`);
+    }
+    return { baseVersion, version: nextVersion, tag };
 }

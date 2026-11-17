@@ -1,11 +1,18 @@
-name: Release package
+name: Create package
+run-name: Create package (${{ inputs.bump }}) by @${{ github.actor }}
 
 on:
-  push:
-    branches:
-      - main
-    tags:
-      - 'v[0-9]*'
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Version increment (from the latest release)
+        required: true
+        default: patch
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 permissions:
   contents: read
@@ -25,40 +32,57 @@ jobs:
         with:
           node-version: '24'
           cache: npm
-      - name: Determine release
+      - name: Determine package version
         id: release
         uses: actions/github-script@v8
+        env:
+          VERSION_BUMP: ${{ inputs.bump }}
         with:
           script: |
             const { getReleasePlan } = require('./scripts/github-release.mjs');
             const { version } = require('./package.json');
-            const sha = require('node:child_process').execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
             const plan = await getReleasePlan({
               github,
-              context: { repo: context.repo, ref: context.ref, sha },
+              context: { repo: context.repo, ref: context.ref },
               version,
+              bump: process.env.VERSION_BUMP,
             });
             core.setOutput('tag', plan.tag);
-            core.setOutput('sha', sha);
-            core.setOutput('publish', plan.publish);
-            core.info(plan.publish ? `Preparing ${plan.tag}` : `${plan.tag} is already published; skipping.`);
+            core.setOutput('version', plan.version);
+            core.info(`Package version: ${plan.version} (${process.env.VERSION_BUMP} from ${plan.baseVersion})`);
+            await core.summary
+              .addHeading(`Create package ${plan.tag}`)
+              .addRaw(`Version: **${plan.version}** (${process.env.VERSION_BUMP} from ${plan.baseVersion}).\n\n`)
+              .addRaw(`Source commit: \`${context.sha}\`. No source files will be committed.\n\n`)
+              .write();
       - run: npm ci
-        if: steps.release.outputs.publish == 'true'
+      - name: Set generated package version (no commit or tag)
+        env:
+          PACKAGE_VERSION: ${{ steps.release.outputs.version }}
+        run: npm version "$PACKAGE_VERSION" --no-git-tag-version --ignore-scripts
       - run: npm test
-        if: steps.release.outputs.publish == 'true'
       - name: Pack tested build
-        if: steps.release.outputs.publish == 'true'
         run: npm pack --ignore-scripts
-      - name: Publish release archive
-        if: steps.release.outputs.publish == 'true'
+      - name: Publish package
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ steps.release.outputs.tag }}
-          RELEASE_SHA: ${{ steps.release.outputs.sha }}
+          PACKAGE_VERSION: ${{ steps.release.outputs.version }}
         run: |
-          version=$(node -p "require('./package.json').version")
+          echo "Publishing package version: $PACKAGE_VERSION"
           gh release create "$RELEASE_TAG" \
-            "chrome-extension-component-library-${version}.tgz" \
-            --target "$RELEASE_SHA" \
+            "chrome-extension-component-library-${PACKAGE_VERSION}.tgz" \
+            --target "$GITHUB_SHA" \
             --title "$RELEASE_TAG" \
             --generate-notes
+          url="https://github.com/${GITHUB_REPOSITORY}/releases/download/${RELEASE_TAG}/chrome-extension-component-library-${PACKAGE_VERSION}.tgz"
+          echo "Install: npm install $url"
+          {
+            echo "## Published package $PACKAGE_VERSION"
+            echo
+            echo "[View release](https://github.com/${GITHUB_REPOSITORY}/releases/tag/${RELEASE_TAG})"
+            echo
+            echo '```bash'
+            echo "npm install $url"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
