@@ -38,7 +38,7 @@
     color: var(--color-text);
     background: var(--color-panel);
     border: 1px solid var(--color-border);
-    border-radius: 10px;
+    border-radius: var(--radius-surface);
     box-shadow: var(--shadow-list-item);
     transition: background-color 0.16s, border-color 0.16s;
 }

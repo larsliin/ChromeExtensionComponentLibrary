@@ -6,7 +6,7 @@ A collection of Vue 3 components designed specifically for Chrome extensions.
 
 ### Actions
 
-- **[BaseButton](/components/base-button)** - Button with `primary`, `secondary`, `tool` and `bare` variants
+- **[BaseButton](/components/base-button)** - Button with `primary`, `secondary`, `danger`, `tool` and `bare` variants
 - **[BaseCopyButton](/components/base-copy-button)** - Clipboard button with temporary success feedback and stable width
 - **[BaseIconButton](/components/base-icon-button)** - Icon-only toolbar, primary, or filled secondary button with required label and toggle state
 - **[BaseToggleGroup](/components/base-toggle-group)** - Data-driven compact icon toolbar with toggle buttons and fold-out radio menus
@@ -33,6 +33,7 @@ A collection of Vue 3 components designed specifically for Chrome extensions.
 ### Feedback
 
 - **[BaseAlert](/components/base-alert)** - Error, warning and info messages
+- **[BaseDialog](/components/base-dialog)** - Modal alerts and confirmations with compact actions and optional danger styling
 - **[BaseLoadingBar](/components/base-loading-bar)** - Indeterminate progress bar
 - **[BaseSpinner](/components/base-spinner)** - Circular loading indicator with five sizes
 

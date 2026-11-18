@@ -24,6 +24,7 @@ export default defineConfig({
           { text: 'BaseCheckbox', link: '/components/base-checkbox' },
           { text: 'BaseCodeEditor', link: '/components/base-code-editor' },
           { text: 'BaseCopyButton', link: '/components/base-copy-button' },
+          { text: 'BaseDialog', link: '/components/base-dialog' },
           { text: 'BaseHeroButton', link: '/components/base-hero-button' },
           { text: 'BaseIconButton', link: '/components/base-icon-button' },
           { text: 'BaseListItem', link: '/components/base-list-item' },

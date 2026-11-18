@@ -6,7 +6,7 @@ A collection of reusable Vue 3 components for building accessible interfaces in 
 
 ### Actions
 
-- **[BaseButton](docs/components/base-button.md)** - Button with primary, secondary, tool, and bare variants
+- **[BaseButton](docs/components/base-button.md)** - Button with primary, secondary, danger, tool, and bare variants
 - **[BaseCopyButton](docs/components/base-copy-button.md)** - Clipboard button with temporary success feedback and stable width
 - **[BaseIconButton](docs/components/base-icon-button.md)** - Accessible icon-only button with toolbar, primary, and filled secondary variants
 - **[BaseHeroButton](docs/components/base-hero-button.md)** - Large glossy call-to-action with custom slot content
@@ -28,6 +28,7 @@ A collection of reusable Vue 3 components for building accessible interfaces in 
 ### Feedback
 
 - **[BaseAlert](docs/components/base-alert.md)** - Error, warning, and information messages
+- **[BaseDialog](docs/components/base-dialog.md)** - Modal alerts and confirmations with content-width actions and optional danger styling
 - **[BaseLoadingBar](docs/components/base-loading-bar.md)** - Indeterminate progress indicator
 
 See the [component documentation](docs/components/index.md) for the component overview, examples, and API details.
@@ -42,6 +43,66 @@ All icons use the locally bundled `bootstrap-icons` package. See the [icon setup
 - Accessible, reusable APIs designed for compact extension interfaces
 - Shared CSS design tokens, with dark and light themes
 - Small dependency footprint; CodeMirror remains optional
+
+## Shared design tokens
+
+Import `chrome-extension-component-library/style.css` once, then override its CSS custom properties in your own stylesheet. Colors support dark (default) and light themes; font families and corner radii are shared across both.
+
+### Border radius
+
+| Token | Default | Used for |
+| --- | --- | --- |
+| `--radius-track` | `2px` | Range input tracks |
+| `--radius-button` | `4px` | Buttons, form controls, alerts, code editor, toggle-group inner buttons |
+| `--radius-panel` | `6px` | Menu-select panel and toggle-group container |
+| `--radius-surface` | `8px` | ListItem and HeroButton |
+| `--radius-pill` | `999px` | Loading bar and switch track |
+
+### Font family (font face)
+
+| Token | Default | Used for |
+| --- | --- | --- |
+| `--font-family-base` | `system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif` | Interface text, including ListItem and HeroButton |
+| `--font-family-mono` | `ui-monospace, SFMono-Regular, Menlo, Consolas, monospace` | Code editor |
+
+These tokens select fonts; they do not download them. Bundle custom font files in the consuming project, register them with `@font-face`, and use the registered family name in the token.
+
+### Colors
+
+| Tokens | Purpose |
+| --- | --- |
+| `--color-bg`, `--color-panel`, `--color-panel-raised`, `--color-editor-bg` | Backgrounds and surfaces |
+| `--color-text`, `--color-text-muted`, `--color-border` | Text and borders |
+| `--color-hover`, `--color-active`, `--color-focus` | Interaction feedback |
+| `--color-accent`, `--color-accent-hover`, `--color-accent-active`, `--color-on-accent` | Primary actions and their text |
+| `--color-danger`, `--color-danger-hover`, `--color-danger-active`, `--color-on-danger` | Destructive actions and their text |
+| `--color-dialog-backdrop` | Modal dialog backdrop |
+| `--color-button-secondary`, `--color-button-secondary-border`, `--color-button-secondary-hover`, `--color-button-secondary-border-hover` | Secondary buttons |
+| `--color-error*`, `--color-warning*`, `--color-info*` | Feedback text, backgrounds, and borders |
+| `--color-hero-*` | HeroButton surface, gloss, text, borders, and disabled states |
+
+The `*` notation denotes token families, not literal CSS property names. See the [theming guide](docs/guide/theming.md#color-tokens) for their members.
+
+```css
+/* Load after the library stylesheet. */
+:root {
+  --radius-surface: 8px;
+  --font-family-base: Arial, Helvetica, sans-serif;
+}
+
+[data-theme='dark'],
+[data-theme='light'],
+:root {
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+  --color-accent-active: #1e40af;
+  --color-on-accent: #ffffff;
+}
+```
+
+Set `data-theme="light"` on `<html>` or a subtree to use the light theme. Tokens can also be overridden on a wrapper to customize only its descendants. Prefer semantic tokens over raw `--palette-*` values.
+
+See the [theming guide](docs/guide/theming.md) for scoped overrides, radius behavior, and font setup, and each component's **Tokens used** section for its styling contract.
 
 ## Install from a GitHub Release
 

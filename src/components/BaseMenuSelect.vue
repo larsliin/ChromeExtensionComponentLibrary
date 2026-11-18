@@ -286,7 +286,7 @@
         padding: 4px;
         background-color: var(--color-panel);
         border: 1px solid var(--color-border);
-        border-radius: 6px;
+        border-radius: var(--radius-panel);
         box-shadow: var(--shadow-floating-panel);
     }
 

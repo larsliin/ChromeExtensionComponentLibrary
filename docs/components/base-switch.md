@@ -45,4 +45,4 @@ Unrecognized attributes and listeners, including `aria-label` and `aria-describe
 
 ## Tokens used
 
-`--color-text`, `--color-button-secondary`, `--color-button-secondary-border`, `--color-accent`, `--color-on-accent`, `--color-focus`, `--font-family-base`.
+`--color-text`, `--color-button-secondary`, `--color-button-secondary-border`, `--color-accent`, `--color-on-accent`, `--color-focus`, `--font-family-base`, `--radius-pill` (999px, switch track). The thumb remains circular.

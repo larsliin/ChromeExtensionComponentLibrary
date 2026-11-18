@@ -2,6 +2,7 @@ export { default as BaseAlert } from './components/BaseAlert.vue';
 export { default as BaseButton } from './components/BaseButton.vue';
 export { default as BaseCheckbox } from './components/BaseCheckbox.vue';
 export { default as BaseCopyButton } from './components/BaseCopyButton.vue';
+export { default as BaseDialog } from './components/BaseDialog.vue';
 export { default as BaseHeroButton } from './components/BaseHeroButton.vue';
 export { default as BaseIconButton } from './components/BaseIconButton.vue';
 export { default as BaseListItem } from './components/BaseListItem.vue';

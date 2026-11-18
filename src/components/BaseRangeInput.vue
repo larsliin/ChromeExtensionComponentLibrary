@@ -31,14 +31,14 @@
     .range-input::-webkit-slider-runnable-track {
         height: 4px;
         background: var(--color-border);
-        border-radius: 2px;
+        border-radius: var(--radius-track);
     }
 
     .range-input::-moz-range-track,
     .range-input::-moz-range-progress {
         height: 4px;
         background: var(--color-border);
-        border-radius: 2px;
+        border-radius: var(--radius-track);
     }
 
     .range-input::-webkit-slider-thumb {

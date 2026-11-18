@@ -19,7 +19,7 @@
         height: 3px;
         overflow: hidden;
         background: var(--color-border);
-        border-radius: 999px;
+        border-radius: var(--radius-pill);
     }
 
     .loading-bar-indicator {

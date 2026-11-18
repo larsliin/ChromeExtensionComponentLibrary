@@ -99,3 +99,5 @@ Fold-out menus follow radio-group keyboard behavior: arrows wrap through enabled
 ## Tokens used
 
 Uses [BaseIconButton](/components/base-icon-button) and [BaseMenuSelect](/components/base-menu-select) styling tokens.
+
+The outer container uses `--radius-panel` (6px); inner buttons use `--radius-button` (4px).

@@ -64,4 +64,6 @@ Native attributes (`disabled`, `aria-label`, ...) and listeners fall through to 
 
 ## Tokens used
 
-The surface, gradient, gloss, shadow, text, border and disabled surface tokens from `--color-hero-*`, plus `--color-focus` and `--font-family-base`. Override the `--color-hero-gradient-*` tokens to rebrand the surface. The shared icon and caption tokens remain available for use in consumer-owned content styles.
+The surface, gradient, gloss, shadow, text, border and disabled surface tokens from `--color-hero-*`, plus `--color-focus`, `--radius-surface` and `--font-family-base`. Override the `--color-hero-gradient-*` tokens to rebrand the surface. The shared icon and caption tokens remain available for use in consumer-owned content styles.
+
+`--radius-surface` defaults to 8px (previously 6px), shared with BaseListItem. The inset gloss corners follow this radius in both normal and pressed states, reduced by 2px and clamped at zero. The example's slotted icon tile keeps its consumer-owned 14px radius.

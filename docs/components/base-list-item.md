@@ -173,6 +173,7 @@ There are no custom events. Attributes and native listeners fall through to the 
 - `--color-panel`, `--color-panel-raised`, `--color-border`, `--color-focus`
 - `--color-bg`, `--color-accent`, `--color-on-accent`, `--color-text`
 - `--shadow-list-item`
+- `--radius-surface` (8px, shared with BaseHeroButton; previously 10px)
 - `--font-family-base`
 
 All colors support the dark default and `[data-theme='light']`.

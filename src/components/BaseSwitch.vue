@@ -66,7 +66,7 @@ const generatedId = useId()
   height: 24px;
   padding: 3px;
   border: 1px solid var(--color-button-secondary-border);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background-color: var(--color-button-secondary);
   transition: background-color 150ms ease, border-color 150ms ease;
 }

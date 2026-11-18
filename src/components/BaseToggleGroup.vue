@@ -83,7 +83,7 @@
         padding: 3px 4px;
         background-color: var(--color-panel-raised);
         border: 1px solid var(--color-border);
-        border-radius: 6px;
+        border-radius: var(--radius-panel);
     }
 
     .toggle-group .toggle-group__button,
@@ -100,7 +100,7 @@
         color: var(--color-text-muted);
         background-color: transparent;
         border: none;
-        border-radius: 4px;
+        border-radius: var(--radius-button);
     }
 
     .toggle-group .toggle-group__button:hover:not(:disabled),

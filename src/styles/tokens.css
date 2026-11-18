@@ -16,6 +16,9 @@
     --palette-green-500: #1D9E75;
     --palette-green-600: #15a86d;
     --palette-green-700: #0f7d54;
+    --palette-red-700: #b91c1c;
+    --palette-red-800: #991b1b;
+    --palette-red-900: #7f1d1d;
     --palette-white: #ffffff;
 
     --font-family-base: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -23,7 +26,11 @@
     --font-size-base: 14px;
     --line-height-base: 1.4;
 
+    --radius-track: 2px;
     --radius-button: 4px;
+    --radius-panel: 6px;
+    --radius-surface: 8px;
+    --radius-pill: 999px;
     --shadow-floating-panel: 0 4px 16px rgb(0 0 0 / 40%);
 
     /* Hero button (BaseHeroButton) — glossy accent surface, identical in both themes. */
@@ -67,6 +74,12 @@
     --color-accent-hover: var(--palette-green-600);
     --color-accent-active: var(--palette-green-700);
     --color-on-accent: var(--palette-white);
+
+    --color-danger: var(--palette-red-700);
+    --color-danger-hover: var(--palette-red-800);
+    --color-danger-active: var(--palette-red-900);
+    --color-on-danger: var(--palette-white);
+    --color-dialog-backdrop: rgb(0 0 0 / 60%);
 
     --color-button-secondary: #363636;
     --color-button-secondary-border: #626262;
@@ -114,6 +127,12 @@
     --color-accent-hover: var(--palette-green-600);
     --color-accent-active: var(--palette-green-700);
     --color-on-accent: var(--palette-white);
+
+    --color-danger: var(--palette-red-700);
+    --color-danger-hover: var(--palette-red-800);
+    --color-danger-active: var(--palette-red-900);
+    --color-on-danger: var(--palette-white);
+    --color-dialog-backdrop: rgb(0 0 0 / 35%);
 
     --color-button-secondary: #e5e7eb;
     --color-button-secondary-border: #9ca3af;

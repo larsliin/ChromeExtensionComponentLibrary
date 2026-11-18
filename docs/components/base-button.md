@@ -35,6 +35,22 @@ Outlined, accent-colored text, e.g. "Copy HEX" / "Copy all colors".
 <BaseButton variant="secondary" size="small">Copy HEX</BaseButton>
 ```
 
+### Danger
+
+Red destructive action, e.g. "Delete". Uses dedicated danger tokens in both themes, separate from error feedback.
+
+<ComponentPreview>
+  <BaseButton variant="danger">Delete</BaseButton>
+  <BaseButton variant="danger" size="small">Delete</BaseButton>
+  <BaseButton variant="danger" disabled>Delete</BaseButton>
+</ComponentPreview>
+
+```vue
+<BaseButton variant="danger" @click="deleteItem">Delete</BaseButton>
+```
+
+For alerts and confirmations with content-width actions, use [BaseDialog](/components/base-dialog).
+
 ### Tool
 
 Square icon button for toolbars. Always provide an `aria-label`.
@@ -70,7 +86,7 @@ No padding, background or border — a clickable shell for custom content such a
 
 ## Sizes
 
-`primary` and `secondary` come in `medium` (default) and `small`. `tool` has a fixed 36×36 size; `bare` has no size.
+`primary`, `secondary`, and `danger` come in `medium` (default) and `small`. `tool` has a fixed 36×36 size; `bare` has no size.
 
 | Size | Font size | Padding | Min height |
 |------|-----------|---------|------------|
@@ -97,7 +113,7 @@ Use [BaseCopyButton](/components/base-copy-button) for clipboard actions. It wra
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | Native button type |
-| `variant` | `'primary' \| 'secondary' \| 'tool' \| 'bare'` | — | Visual style |
+| `variant` | `'primary' \| 'secondary' \| 'danger' \| 'tool' \| 'bare'` | — | Visual style |
 | `size` | `'small' \| 'medium'` | `'medium'` | Size (ignored by `tool` and `bare`) |
 
 Native attributes (`disabled`, `title`, `aria-*`) and listeners (`@click`, ...) fall through to the `<button>`.
@@ -111,6 +127,6 @@ Native attributes (`disabled`, `title`, `aria-*`) and listeners (`@click`, ...) 
 
 ## Tokens used
 
-`--color-accent`, `--color-accent-hover`, `--color-accent-active`, `--color-on-accent`, `--color-text`, `--color-border`, `--color-hover`, `--color-active`, `--color-editor-bg`, `--color-focus`, `--radius-button`, `--font-family-base`, `--line-height-base`.
+`--color-accent`, `--color-accent-hover`, `--color-accent-active`, `--color-on-accent`, `--color-danger`, `--color-danger-hover`, `--color-danger-active`, `--color-on-danger`, `--color-text`, `--color-border`, `--color-hover`, `--color-active`, `--color-editor-bg`, `--color-focus`, `--radius-button`, `--font-family-base`, `--line-height-base`.
 
 See [Theming](/guide/theming).

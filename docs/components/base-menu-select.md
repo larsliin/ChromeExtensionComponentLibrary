@@ -77,4 +77,4 @@ The options and selected value can change while the panel is open. Focus and pan
 
 ## Tokens used
 
-`--color-text`, `--color-text-muted`, `--color-hover`, `--color-panel`, `--color-border`, `--color-accent`, `--color-accent-hover`, `--color-on-accent`, `--color-focus`, `--shadow-floating-panel`, `--radius-button`, `--font-family-base`.
+`--color-text`, `--color-text-muted`, `--color-hover`, `--color-panel`, `--color-border`, `--color-accent`, `--color-accent-hover`, `--color-on-accent`, `--color-focus`, `--shadow-floating-panel`, `--radius-button`, `--radius-panel`, `--font-family-base`.

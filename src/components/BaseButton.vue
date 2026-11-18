@@ -3,7 +3,7 @@
 
     withDefaults(defineProps<{
         type?: 'button' | 'submit' | 'reset';
-        variant?: 'primary' | 'secondary' | 'tool' | 'bare';
+        variant?: 'primary' | 'secondary' | 'danger' | 'tool' | 'bare';
         /** Ignored by the `tool` and `bare` variants. */
         size?: 'small' | 'medium';
     }>(), {
@@ -85,6 +85,28 @@
 .primary-button:active:not(:disabled) {
     background: var(--color-accent-active);
     border-color: var(--color-accent-active);
+}
+
+/* Danger */
+
+.danger-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--color-on-danger);
+    font-weight: 500;
+    background: var(--color-danger);
+    border: 1px solid var(--color-danger);
+}
+
+.danger-button:hover:not(:disabled) {
+    background: var(--color-danger-hover);
+    border-color: var(--color-danger-hover);
+}
+
+.danger-button:active:not(:disabled) {
+    background: var(--color-danger-active);
+    border-color: var(--color-danger-active);
 }
 
 /* Secondary */

@@ -13,6 +13,7 @@
 
 <style scoped>
     .hero-button {
+        --hero-gloss-radius: max(0px, calc(var(--radius-surface) - 2px));
         --hero-surface-direction: 180deg;
         --hero-surface:
             radial-gradient(ellipse 80% 55% at 50% 108%, var(--color-hero-bounce), transparent 80%),
@@ -42,7 +43,7 @@
         text-shadow: 0 1px 2px var(--color-hero-text-shadow);
         background: var(--hero-surface);
         border: 1px solid var(--color-hero-border);
-        border-radius: 6px;
+        border-radius: var(--radius-surface);
         box-shadow: var(--hero-shadow);
         cursor: pointer;
         transition: box-shadow 100ms ease-out, filter 100ms ease-out;
@@ -57,7 +58,7 @@
         height: 46%;
         content: '';
         background: linear-gradient(180deg, var(--color-hero-gloss-start) 0%, var(--color-hero-gloss-end) 100%);
-        border-radius: 4px 4px 50% 50% / 4px 4px 12px 12px;
+        border-radius: var(--hero-gloss-radius) var(--hero-gloss-radius) 50% 50% / var(--hero-gloss-radius) var(--hero-gloss-radius) 12px 12px;
         box-shadow: inset 0 1px 0 var(--color-hero-gloss-start);
         pointer-events: none;
     }
@@ -84,7 +85,7 @@
         bottom: 2px;
         height: 30%;
         background: linear-gradient(0deg, var(--color-hero-gloss-start) 0%, var(--color-hero-gloss-end) 100%);
-        border-radius: 50% 50% 4px 4px / 12px 12px 4px 4px;
+        border-radius: 50% 50% var(--hero-gloss-radius) var(--hero-gloss-radius) / 12px 12px var(--hero-gloss-radius) var(--hero-gloss-radius);
         box-shadow: inset 0 -1px 0 var(--color-hero-gloss-start);
         opacity: 0.7;
     }

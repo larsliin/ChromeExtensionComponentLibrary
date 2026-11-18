@@ -35,4 +35,4 @@ Native attributes (`min`, `max`, `step`, `disabled`, `aria-label`, ...) fall thr
 
 ## Tokens used
 
-`--color-border`, `--color-text`, `--color-accent`, `--color-focus`.
+`--color-border`, `--color-text`, `--color-accent`, `--color-focus`, `--radius-track` (2px). Thumbs remain circular.

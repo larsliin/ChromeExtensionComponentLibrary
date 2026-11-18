@@ -24,4 +24,4 @@ The animation slows down when `prefers-reduced-motion` is set.
 
 ## Tokens used
 
-`--color-border`, `--color-accent`.
+`--color-border`, `--color-accent`, `--radius-pill` (999px). The indicator inherits the track radius.
